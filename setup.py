@@ -4,15 +4,12 @@ from setuptools import setup
 from pdfminer import __version__
 import subprocess
 
-from distutils.command.bdist import bdist 
+from distutils.command.install_lib import install_lib 
 
-class PdfMinerInstall(bdist):
-    def run(bdist):
-        self.do_make()
-        Command.run(self)
-
-    def do_make(self):
+class PdfMinerInstall(install_lib):
+    def run(self):
         subprocess.call(["make","cmap"])
+        install_lib.run(self)
 
 setup(
     name='pdfminer',
@@ -30,7 +27,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
-    cmdclass={'bdist': PdfMinerInstall},
+    cmdclass={'install_lib': PdfMinerInstall},
     packages=[
     'pdfminer',
     'pdfminer.cmap',
