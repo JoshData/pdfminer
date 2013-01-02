@@ -17,7 +17,7 @@ class PdfMinerInstall(DistutilsInstall):
 
 setup(
     name='pdfminer',
-    version=__version__,
+    version=__version__ + "-vayana",
     description='PDF parser and analyzer',
     long_description='''PDFMiner is a tool for extracting information from PDF documents.
 Unlike other PDF-related tools, it focuses entirely on getting 
