@@ -1,18 +1,17 @@
 #!/usr/bin/env python2
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
 from pdfminer import __version__
 import subprocess
 
-from distutils.command.install import install as DistutilsInstall
+from distutils.command.bdist import bdist 
 
-class PdfMinerInstall(DistutilsInstall):
+class PdfMinerInstall(bdist):
     def run(self):
-        print("----------------------- running  ---------------------------")
         self.do_make()
-        DistutilsInstall.run(self)
+        bdist.run(self)
 
     def do_make(self):
-        print("----------------------- making cmap ---------------------------")
         subprocess.call(["make","cmap"])
 
 setup(
@@ -31,7 +30,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
-    cmdclass={'install': PdfMinerInstall},
+    cmdclass={'bdist_egg': PdfMinerInstall},
     packages=[
     'pdfminer',
     'pdfminer.cmap',
@@ -53,4 +52,9 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     'License :: OSI Approved :: MIT License',
     'Topic :: Text Processing',
     ],
+    #entry_points = {
+        #"distutils.commands": [
+            #"bdist_egg = PdfMinerInstall"
+        #]
+    #}
     )
