@@ -7,9 +7,9 @@ import subprocess
 from distutils.command.bdist import bdist 
 
 class PdfMinerInstall(bdist):
-    def run(self):
+    def run(bdist):
         self.do_make()
-        bdist.run(self)
+        Command.run(self)
 
     def do_make(self):
         subprocess.call(["make","cmap"])
@@ -30,7 +30,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
-    cmdclass={'bdist_egg': PdfMinerInstall},
+    cmdclass={'bdist': PdfMinerInstall},
     packages=[
     'pdfminer',
     'pdfminer.cmap',
@@ -52,9 +52,4 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     'License :: OSI Approved :: MIT License',
     'Topic :: Text Processing',
     ],
-    #entry_points = {
-        #"distutils.commands": [
-            #"bdist_egg = PdfMinerInstall"
-        #]
-    #}
     )
