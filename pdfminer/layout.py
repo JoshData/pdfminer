@@ -609,8 +609,9 @@ class LTLayoutContainer(LTContainer):
                 group = LTTextGroupLRTB([obj1,obj2])
             plane.remove(obj1)
             plane.remove(obj2)
-            # this line is optimized -- don't change without profiling
-            dists = [ n for n in dists if n[2] in plane._objs and n[3] in plane._objs ]
+            # keep only pairs where obj1 and obj2 are in plane
+            # this line is highly optimized -- don't change without profiling
+            dists = [ n for n in dists if set(n[2:4]) <= plane._objs ]
             for other in plane:
                 dists.append((0, dist(group,other), group, other))
             dists.sort()

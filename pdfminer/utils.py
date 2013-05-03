@@ -12,40 +12,45 @@ def apply_png_predictor(pred, colors, columns, bitspercomponent, data):
     if bitspercomponent != 8:
         # unsupported
         raise ValueError(bitspercomponent)
-    nbytes = colors*columns*bitspercomponent/8
+    nbytes = colors * columns * bitspercomponent / 8
     i = 0
-    buf = ''
+    buf = []
     line0 = '\x00' * columns
-    while i < len(data):
-        pred = data[i]
-        i += 1
-        line1 = data[i:i+nbytes]
-        i += nbytes
-        if pred == '\x00':
+    for i in range(0, len(data), nbytes + 1):
+        pred = ord(data[i])
+        line1 = data[i + 1:i + nbytes + 1]
+        if pred != 2:
+            print repr(pred), repr(line1)
+        if pred == 0:
             # PNG none
-            buf += line1
-        elif pred == '\x01':
+            pass
+        elif pred == 1:
             # PNG sub (UNTESTED)
+            l = []
             c = 0
             for b in line1:
-                c = (c+ord(b)) & 255
-                buf += chr(c)
-        elif pred == '\x02':
+                c = (c + ord(b)) & 255
+                l.append(chr(c))
+            line1 = ''.join(l)
+        elif pred == 2:
             # PNG up
-            for (a,b) in zip(line0,line1):
-                c = (ord(a)+ord(b)) & 255
-                buf += chr(c)
-        elif pred == '\x03':
+            line1 = ''.join(
+                chr((ord(a) + ord(b)) & 255) for (a, b) in
+                zip(line0, line1))
+        elif pred == 3:
             # PNG average (UNTESTED)
+            l = []
             c = 0
-            for (a,b) in zip(line0,line1):
-                c = ((c+ord(a)+ord(b))/2) & 255
-                buf += chr(c)
+            for (a, b) in zip(line0, line1):
+                c = ((c + ord(a) + ord(b)) / 2) & 255
+                l.append(chr(c))
+            line1 = ''.join(l)
         else:
             # unsupported
             raise ValueError(pred)
+        buf.append(line1)
         line0 = line1
-    return buf
+    return ''.join(buf)
 
 
 ##  Matrix operations
@@ -217,7 +222,7 @@ def matrix2str((a,b,c,d,e,f)):
 class ObjIdRange(object):
 
     "A utility class to represent a range of object IDs."
-    
+
     def __init__(self, start, nobjs):
         self.start = start
         self.nobjs = nobjs
@@ -245,10 +250,12 @@ class ObjIdRange(object):
 ##
 class Plane(object):
 
-    def __init__(self, objs=None, gridsize=50):
+    def __init__(self, objs=None, gridsize=50, largearea=1000000):
         self._objs = set()
         self._grid = {}
+        self._large = set()
         self.gridsize = gridsize
+        self.largearea = largearea
         if objs is not None:
             for obj in objs:
                 self.add(obj)
@@ -271,38 +278,76 @@ class Plane(object):
             for x in drange(x0, x1, self.gridsize):
                 yield (x,y)
         return
-    
+
+    # get points with data from grid in range
+    def _gridrange(self, (x0,y0,x1,y1)):
+        gx0 = int(x0)/self.gridsize
+        gx1 = int(x1+self.gridsize)/self.gridsize
+        gy0 = int(y0)/self.gridsize
+        gy1 = int(y1+self.gridsize)/self.gridsize
+        if (gx1 - gx0) * (gy1 - gy0) <= len(self._grid):
+            for y in xrange(gy0, gy1):
+                for x in xrange(gx0, gx1):
+                    if (x,y) in self._grid:
+                        yield (x,y)
+
+            return
+
+        for point in ( (x,y) for (x,y) in self._grid.keys()
+                if gx0 <= x < gx1 and gy0 <= y < gy1 ):
+            yield point
+
     # add(obj): place an object.
     def add(self, obj):
-        for k in self._getrange((obj.x0, obj.y0, obj.x1, obj.y1)):
-            if k not in self._grid:
-                r = []
-                self._grid[k] = r
-            else:
-                r = self._grid[k]
-            r.append(obj)
+        x0, y0, x1, y1 = obj.x0, obj.y0, obj.x1, obj.y1
+        if (x1 - x0) * (y1 - y0) > self.largearea:
+            self._large.add(obj)
+
+        else:
+            for k in self._getrange((x0, y0, x1, y1)):
+                if k not in self._grid:
+                    r = set()
+                    self._grid[k] = r
+
+                else:
+                    r = self._grid[k]
+
+                r.add(obj)
+
         self._objs.add(obj)
         return
 
     # remove(obj): displace an object.
     def remove(self, obj):
-        for k in self._getrange((obj.x0, obj.y0, obj.x1, obj.y1)):
+        for k in self._gridrange((obj.x0, obj.y0, obj.x1, obj.y1)):
             try:
-                self._grid[k].remove(obj)
+                self._grid[k].discard(obj)
+                if not self._grid[k]:
+                    del self._grid[k]
+
             except (KeyError, ValueError):
                 pass
-        self._objs.remove(obj)
+
+        self._objs.discard(obj)
+        self._large.discard(obj)
         return
 
     # find(): finds objects that are in a certain area.
     def find(self, (x0,y0,x1,y1)):
         done = set()
-        for k in self._getrange((x0,y0,x1,y1)):
-            if k not in self._grid: continue
+        for k in self._gridrange((x0,y0,x1,y1)):
             for obj in self._grid[k]:
-                if obj in done: continue
+                if obj in done:
+                    continue
+
                 done.add(obj)
-                if (obj.x1 <= x0 or x1 <= obj.x0 or
-                    obj.y1 <= y0 or y1 <= obj.y0): continue
+                if (obj.x1 > x0 and x1 > obj.x0 and
+                        obj.y1 > y0 and y1 > obj.y0):
+                    yield obj
+
+        for obj in self._large:
+            if (obj.x1 > x0 and x1 > obj.x0 and
+                    obj.y1 > y0 and y1 > obj.y0):
                 yield obj
+
         return
