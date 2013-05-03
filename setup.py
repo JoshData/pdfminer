@@ -1,10 +1,19 @@
 #!/usr/bin/env python2
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
 from pdfminer import __version__
+import subprocess
+
+from distutils.command.install_lib import install_lib 
+
+class PdfMinerInstall(install_lib):
+    def run(self):
+        subprocess.call(["make","cmap"])
+        install_lib.run(self)
 
 setup(
     name='pdfminer',
-    version=__version__,
+    version=__version__ + "-vayana",
     description='PDF parser and analyzer',
     long_description='''PDFMiner is a tool for extracting information from PDF documents.
 Unlike other PDF-related tools, it focuses entirely on getting 
@@ -18,6 +27,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
+    cmdclass={'install_lib': PdfMinerInstall},
     packages=[
     'pdfminer',
     ],
