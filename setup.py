@@ -1,15 +1,15 @@
 #!/usr/bin/env python2
-#from distutils.core import setup
-from setuptools import setup
+from distutils.command.build import build
+from distutils.core import setup
 from pdfminer import __version__
 import subprocess
 
-from distutils.command.install_lib import install_lib 
 
-class PdfMinerInstall(install_lib):
+class CustomBuild(build):
     def run(self):
-        subprocess.call(["make","cmap"])
-        install_lib.run(self)
+        subprocess.call(['make', 'cmap'])
+        build.run(self)
+
 
 setup(
     name='pdfminer',
@@ -27,7 +27,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
-    cmdclass={'install_lib': PdfMinerInstall},
+    cmdclass={'build': CustomBuild},
     packages=[
     'pdfminer',
     ],
