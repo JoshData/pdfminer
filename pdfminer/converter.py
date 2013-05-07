@@ -442,7 +442,11 @@ class XMLConverter(PDFConverter):
                     render(child)
                 self.outfp.write('</figure>\n')
             elif isinstance(item, LTTextLine):
-                self.outfp.write('<textline bbox="%s">\n' % bbox2str(item.bbox))
+                child_str = ''
+                for child in item:
+                    if isinstance(child, LTChar):
+                        child_str += child.get_text()
+                    self.outfp.write('<textline bbox="%s" text="%s">\n' % (bbox2str(item.bbox), enc(child_str)))
                 for child in item:
                     render(child)
                 self.outfp.write('</textline>\n')
