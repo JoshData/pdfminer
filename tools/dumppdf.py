@@ -1,23 +1,40 @@
 #!/usr/bin/env python2
-#
-# dumppdf.py - dump pdf contents in XML format.
-#
-#  usage: dumppdf.py [options] [files ...]
-#  options:
-#    -i objid : object id
-#
-import sys, os, re
+"""
+dumppdf.py - dump pdf contents in XML format.
+
+This script dumps the internal contents of a PDF file in pseudo-XML format. This program is primarily for debugging
+purposes, but it's also possible to extract some meaningful contents (such as images).
+
+Examples
+
+    $ dumppdf.py -a foo.pdf
+    (dump all the headers and contents, except stream objects)
+
+    $ dumppdf.py -T foo.pdf
+    (dump the table of contents)
+
+    $ dumppdf.py -c raw -i 6 foo.pdf > pic.jpg
+    (extract a JPEG image)
+
+"""
+
+import argparse
+import os
+import sys
+import re
+
 from pdfminer.psparser import PSKeyword, PSLiteral
 from pdfminer.pdfparser import PDFDocument, PDFParser, PDFNoOutlines
 from pdfminer.pdftypes import PDFStream, PDFObjRef, resolve1, stream_value
 
 
 ESC_PAT = re.compile(r'[\000-\037&<>()"\042\047\134\177-\377]')
+
+
 def e(s):
-    return ESC_PAT.sub(lambda m:'&#%d;' % ord(m.group(0)), s)
+    return ESC_PAT.sub(lambda m: '&#%d;' % ord(m.group(0)), s)
 
 
-# dumpxml
 def dumpxml(out, obj, codec=None):
     if obj is None:
         out.write('<null />')
@@ -25,7 +42,7 @@ def dumpxml(out, obj, codec=None):
     
     if isinstance(obj, dict):
         out.write('<dict size="%d">\n' % len(obj))
-        for (k,v) in obj.iteritems():
+        for (k, v) in obj.iteritems():
             out.write('<key>%s</key>\n' % k)
             out.write('<value>')
             dumpxml(out, v)
@@ -78,7 +95,7 @@ def dumpxml(out, obj, codec=None):
 
     raise TypeError(obj)
 
-# dumptrailers
+
 def dumptrailers(out, doc):
     for xref in doc.xrefs:
         out.write('<trailer>\n')
@@ -86,14 +103,15 @@ def dumptrailers(out, doc):
         out.write('\n</trailer>\n\n')
     return
 
-# dumpallobjs
+
 def dumpallobjs(out, doc, codec=None):
     out.write('<pdf>')
     for xref in doc.xrefs:
         for objid in xref.get_objids():
             try:
                 obj = doc.getobj(objid)
-                if obj is None: continue
+                if obj is None:
+                    continue
                 out.write('<object id="%d">\n' % objid)
                 dumpxml(out, obj, codec=codec)
                 out.write('\n</object>\n\n')
@@ -103,11 +121,9 @@ def dumpallobjs(out, doc, codec=None):
     out.write('</pdf>')
     return
 
-# dumpoutline
-def dumpoutline(outfp, fname, objids, pagenos, password='',
-                dumpall=False, codec=None):
+
+def dumpoutline(outfp, fp, objids, pagenos, password='', dumpall=False, codec=None):
     doc = PDFDocument()
-    fp = file(fname, 'rb')
     parser = PDFParser(fp)
     parser.set_document(doc)
     doc.set_parser(parser)
@@ -124,7 +140,7 @@ def dumpoutline(outfp, fname, objids, pagenos, password='',
     try:
         outlines = doc.get_outlines()
         outfp.write('<outlines>\n')
-        for (level,title,dest,a,se) in outlines:
+        for (level, title, dest, a, se) in outlines:
             pageno = None
             if dest:
                 dest = resolve_dest(dest)
@@ -152,11 +168,9 @@ def dumpoutline(outfp, fname, objids, pagenos, password='',
     fp.close()
     return
 
-# extractembedded
-def extractembedded(outfp, fname, objids, pagenos, password='',
-                dumpall=False, codec=None):
+
+def extractembedded(outfp, fp, objids, pagenos, password='', dumpall=False, codec=None):
     doc = PDFDocument()
-    fp = file(fname, 'rb')
     parser = PDFParser(fp)
     parser.set_document(doc)
     doc.set_parser(parser)
@@ -173,14 +187,14 @@ def extractembedded(outfp, fname, objids, pagenos, password='',
                     fileref = obj['EF']['F']
                     fileobj = doc.getobj(fileref.objid)
                     if not isinstance(fileobj, PDFStream):
-                        raise Exception("unable to process PDF: reference for %s is not a PDFStream" % (filename))
+                        raise Exception("unable to process PDF: reference for %s is not a PDFStream" % filename)
                     if not isinstance(fileobj['Type'], PSLiteral) or not fileobj['Type'].name == 'EmbeddedFile':
-                        raise Exception("unable to process PDF: reference for %s is not an EmbeddedFile" % (filename))
+                        raise Exception("unable to process PDF: reference for %s is not an EmbeddedFile" % filename)
 
                     print "extracting", filename
                     absfilename = os.path.normpath(os.path.abspath(filename))
                     if not absfilename.startswith(cwd):
-                        raise Exception("filename %s is trying to escape to parent directories.." % (filename))
+                        raise Exception("filename %s is trying to escape to parent directories." % filename)
 
                     dirname = os.path.dirname(absfilename)
                     if not os.path.isdir(dirname):
@@ -192,11 +206,10 @@ def extractembedded(outfp, fname, objids, pagenos, password='',
                     f.write(fileobj.get_data())
                     f.close()
 
-# dumppdf
-def dumppdf(outfp, fname, objids, pagenos, password='',
+
+def dumppdf(outfp, fp, objids, pagenos, password='',
             dumpall=False, codec=None):
     doc = PDFDocument()
-    fp = file(fname, 'rb')
     parser = PDFParser(fp)
     parser.set_document(doc)
     doc.set_parser(parser)
@@ -219,54 +232,39 @@ def dumppdf(outfp, fname, objids, pagenos, password='',
     if (not objids) and (not pagenos) and (not dumpall):
         dumptrailers(outfp, doc)
     fp.close()
-    if codec not in ('raw','binary'):
+    if codec not in ('raw', 'binary'):
         outfp.write('\n')
     return
 
 
-# main
-def main(argv):
-    import getopt
-    def usage():
-        print 'usage: %s [-d] [-a] [-p pageid] [-P password] [-r|-b|-t] [-T] [-E directory] [-i objid] file ...' % argv[0]
-        return 100
-    try:
-        (opts, args) = getopt.getopt(argv[1:], 'dap:P:rbtTE:i:')
-    except getopt.GetoptError:
-        return usage()
-    if not args: return usage()
-    debug = 0
-    objids = []
-    pagenos = set()
-    codec = None
-    password = ''
-    dumpall = False
-    proc = dumppdf
-    outfp = sys.stdout
-    extractdir = None
-    for (k, v) in opts:
-        if k == '-d': debug += 1
-        elif k == '-i': objids.extend( int(x) for x in v.split(',') )
-        elif k == '-p': pagenos.update( int(x)-1 for x in v.split(',') )
-        elif k == '-P': password = v
-        elif k == '-a': dumpall = True
-        elif k == '-r': codec = 'raw'
-        elif k == '-b': codec = 'binary'
-        elif k == '-t': codec = 'text'
-        elif k == '-T': proc = dumpoutline
-        elif k == '-E': extractdir = v
-        elif k == '-o': outfp = file(v, 'wb')
-    #
+def main():
+    parser = argparse.ArgumentParser(description='Dump pdf contents in XML format.')
+    parser.add_argument('file', nargs='*', type=argparse.FileType('rb'), default=sys.stdin, help='file(s) to dump')
+    parser.add_argument('-d', metavar='debug', nargs='?', default=argparse.SUPPRESS, type=int, help='debug level')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-a', '--dumpall', action='store_true', help='dump all objects, not just trailer')
+    group.add_argument('-T', '--dumpoutline', action='store_true', help='dump table of contents')
+    group.add_argument('-E', metavar='directory', help='extract embedded files and save to directory')
+    parser.add_argument('-c', metavar='codec', help='output format of stream contents (raw, binary, text)')
+    parser.add_argument('-P', metavar='password', default='', help='pdf password')
+    parser.add_argument('-p', metavar='page', nargs='+', default=[], type=int, help='page number(s) (space separated)')
+    parser.add_argument('-i', metavar='objid', nargs='+', default=[],  type=int, help='object id(s) (space separated)')
+    parser.add_argument('-o', metavar='outfile', type=argparse.FileType('wb'), default=sys.stdout,
+                        help='output file name (default: stdout)')
+    args = parser.parse_args()
+    debug = int(args.d or 1) if 'd' in args else 0
     PDFDocument.debug = debug
     PDFParser.debug = debug
-    #
-    if extractdir:
+    proc = dumppdf
+    if args.dumpoutline:
+        proc = dumpoutline
+    elif args.E:
         proc = extractembedded
-        os.chdir(extractdir)
-    #
-    for fname in args:
-        proc(outfp, fname, objids, pagenos, password=password,
-             dumpall=dumpall, codec=codec)
-    return
+        os.chdir(args.E)
+    for fp in args.file:
+        proc(args.o, fp, args.i, [i-1 for i in args.p], args.P, args.dumpall, args.c)
+        pass
 
-if __name__ == '__main__': sys.exit(main(sys.argv))
+
+if __name__ == '__main__':
+    sys.exit(main())
