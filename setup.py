@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 from distutils.command.build import build
 from distutils.command.clean import clean
-from distutils.core import setup
+from setuptools import setup
 from pdfminer import __version__
 import errno
 import os
@@ -35,7 +35,7 @@ class CustomClean(clean):
 
 setup(
     name='pdfminer',
-    version=__version__ + "-vayana",
+    version=__version__,
     description='PDF parser and analyzer',
     long_description='''PDFMiner is a tool for extracting information from PDF documents.
 Unlike other PDF-related tools, it focuses entirely on getting 
@@ -56,11 +56,13 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     package_data={
     'pdfminer': ['cmap/*.pickle.gz']
     },
-    scripts=[
-    'tools/pdf2txt.py',
-    'tools/dumppdf.py',
-    'tools/latin2ascii.py',
-    ],
+    entry_points={
+        'console_scripts': [
+            'pdf2txt = pdfminer.pdf2txt:main',
+            'dumppdf = pdfminer.dumppdf:main',
+            'latin2ascii = pdfminer.latin2ascii:main',
+        ]
+    },
     keywords=['pdf parser', 'pdf converter', 'layout analysis', 'text mining'],
     classifiers=[
     'Development Status :: 4 - Beta',
