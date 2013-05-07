@@ -1,15 +1,37 @@
 #!/usr/bin/env python2
 from distutils.command.build import build
+from distutils.command.clean import clean
 from distutils.core import setup
 from pdfminer import __version__
-import subprocess
+import errno
+import os
+import shutil
+from tools import conv_cmap
+
+
+cmapdir = 'pdfminer/cmap'
 
 
 class CustomBuild(build):
     def run(self):
-        subprocess.call(['make', 'cmap'])
-        build.run(self)
+        # Build cmap directory
+        try:
+            os.makedirs(cmapdir)
+        except OSError as exception:
+            if exception.errno != errno.EEXIST:
+                raise
+        conv_cmap.convert(cmapdir, 'Adobe-CNS1', 'cmaprsrc/cid2code_Adobe_CNS1.txt', ['cp950', 'big5'])
+        conv_cmap.convert(cmapdir, 'Adobe-GB1', 'cmaprsrc/cid2code_Adobe_GB1.txt', ['cp936', 'gb2312'])
+        conv_cmap.convert(cmapdir, 'Adobe-Japan1', 'cmaprsrc/cid2code_Adobe_Japan1.txt', ['cp932', 'euc-jp'])
+        conv_cmap.convert(cmapdir, 'Adobe-Korea1', 'cmaprsrc/cid2code_Adobe_Korea1.txt', ['cp949', 'euc-kr'])
+        build.run(self)  # Continue with regular build
 
+
+class CustomClean(clean):
+    def run(self):
+        # Remove cmap directory in source directory (not build directory)
+        shutil.rmtree(cmapdir, ignore_errors=True)
+        clean.run(self)  # Continue with regular clean
 
 setup(
     name='pdfminer',
@@ -27,7 +49,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
-    cmdclass={'build': CustomBuild},
+    cmdclass={'build': CustomBuild, 'clean': CustomClean},
     packages=[
     'pdfminer',
     ],

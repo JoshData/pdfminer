@@ -113,18 +113,8 @@ def process_cid2code(fp, check_codecs=[]):
 
     return (code2cid, is_vertical, cid2unichr_h, cid2unichr_v)
 
-# main
-def main(argv):
 
-    def usage():
-        print 'usage: %s output_dir regname cid2code.txt codecs ...' % argv[0]
-        return 100
-    
-    args = argv[1:]
-    if len(args) < 3: return usage()
-    (outdir, regname, src) = args[:3]
-    check_codecs = args[3:]
-
+def convert(outdir, regname, src, check_codecs=[]):
     print >>sys.stderr, 'reading %r...' % src
     fp = file(src)
     (code2cid, is_vertical, cid2unichr_h, cid2unichr_v) = process_cid2code(fp, check_codecs)
@@ -152,5 +142,20 @@ def main(argv):
     fp.close()
 
     return 0
+
+
+# main
+def main(argv):
+
+    def usage():
+        print 'usage: %s output_dir regname cid2code.txt codecs ...' % argv[0]
+        return 100
+    
+    args = argv[1:]
+    if len(args) < 3: return usage()
+    (outdir, regname, src) = args[:3]
+    check_codecs = args[3:]
+
+    return convert(outdir, regname, src, check_codecs)
 
 if __name__ == '__main__': sys.exit(main(sys.argv))
