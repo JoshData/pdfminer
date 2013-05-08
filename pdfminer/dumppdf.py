@@ -128,7 +128,8 @@ def dumpoutline(outfp, fp, objids, pagenos, password='', dumpall=False, codec=No
     parser.set_document(doc)
     doc.set_parser(parser)
     doc.initialize(password)
-    pages = dict( (page.pageid, pageno) for (pageno,page) in enumerate(doc.get_pages()) )
+    pages = dict((page.pageid, pageno) for (pageno,page) in enumerate(doc.get_pages()))
+
     def resolve_dest(dest):
         if isinstance(dest, str):
             dest = resolve1(doc.get_dest(dest))
@@ -207,8 +208,7 @@ def extractembedded(outfp, fp, objids, pagenos, password='', dumpall=False, code
                     f.close()
 
 
-def dumppdf(outfp, fp, objids, pagenos, password='',
-            dumpall=False, codec=None):
+def dumppdf(outfp, fp, objids, pagenos, password='', dumpall=False, codec=None):
     doc = PDFDocument()
     parser = PDFParser(fp)
     parser.set_document(doc)
@@ -219,7 +219,7 @@ def dumppdf(outfp, fp, objids, pagenos, password='',
             obj = doc.getobj(objid)
             dumpxml(outfp, obj, codec=codec)
     if pagenos:
-        for (pageno,page) in enumerate(doc.get_pages()):
+        for (pageno, page) in enumerate(doc.get_pages()):
             if pageno in pagenos:
                 if codec:
                     for obj in page.contents:

@@ -10,8 +10,6 @@ class CorruptDataError(Exception):
     pass
 
 
-##  LZWDecoder
-##
 class LZWDecoder(object):
 
     debug = 0
@@ -29,22 +27,23 @@ class LZWDecoder(object):
         v = 0
         while 1:
             # the number of remaining bits we can get from the current buffer.
-            r = 8-self.bpos
+            r = 8 - self.bpos
             if bits <= r:
                 # |-----8-bits-----|
                 # |-bpos-|-bits-|  |
                 # |      |----r----|
-                v = (v<<bits) | ((self.buff>>(r-bits)) & ((1<<bits)-1))
+                v = (v << bits) | ((self.buff >> (r - bits)) & ((1 << bits) - 1))
                 self.bpos += bits
                 break
             else:
                 # |-----8-bits-----|
                 # |-bpos-|---bits----...
                 # |      |----r----|
-                v = (v<<r) | (self.buff & ((1<<r)-1))
+                v = (v << r) | (self.buff & ((1 << r) - 1))
                 bits -= r
                 x = self.fp.read(1)
-                if not x: raise EOFError
+                if not x:
+                    raise EOFError
                 self.buff = ord(x)
                 self.bpos = 0
         return v
@@ -52,9 +51,9 @@ class LZWDecoder(object):
     def feed(self, code):
         x = b''
         if code == 256:
-            self.table = [bytes([i]) for i in range(256)] # 0-255
-            self.table.append(None) # 256
-            self.table.append(None) # 257
+            self.table = [bytes([i]) for i in range(256)]  # 0-255
+            self.table.append(None)  # 256
+            self.table.append(None)  # 257
             self.prevbuf = b''
             self.nbits = 9
         elif code == 257:
@@ -64,9 +63,9 @@ class LZWDecoder(object):
         else:
             if code < len(self.table):
                 x = self.table[code]
-                self.table.append(self.prevbuf+x[:1])
+                self.table.append(self.prevbuf + x[:1])
             elif code == len(self.table):
-                self.table.append(self.prevbuf+self.prevbuf[:1])
+                self.table.append(self.prevbuf + self.prevbuf[:1])
                 x = self.table[code]
             else:
                 raise CorruptDataError()
@@ -94,11 +93,10 @@ class LZWDecoder(object):
                 break
             yield x
             if self.debug:
-                print >>sys.stderr, ('nbits=%d, code=%d, output=%r, table=%r' %
-                                     (self.nbits, code, x, self.table[258:]))
+                print >>sys.stderr, ('nbits=%d, code=%d, output=%r, table=%r' % (self.nbits, code, x, self.table[258:]))
         return
 
-# lzwdecode
+
 def lzwdecode(data):
     """
     >>> lzwdecode('\x80\x0b\x60\x50\x22\x0c\x0c\x85\x01')
@@ -106,6 +104,7 @@ def lzwdecode(data):
     """
     fp = StringIO(data)
     return ''.join(LZWDecoder(fp).run())
+
 
 if __name__ == '__main__':
     import doctest

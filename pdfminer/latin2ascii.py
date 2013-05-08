@@ -1,10 +1,9 @@
 #!/usr/bin/env python2
-#
-#  latin2ascii.py - convert latin1 characters into ascii.
-#
+"""latin2ascii.py - convert latin1 characters into ascii."""
 
 import argparse
 import sys
+
 
 # Mappings from Latin-1 characters to ASCII.
 # This is an in-house mapping table for some Latin-1 characters (acutes, umlauts, etc.) to ASCII strings.
@@ -99,7 +98,6 @@ LATIN2ASCII = {
     0x201d: "''",
     #0x2022: '',
     #0x2212: '',
-
 }
 
 
@@ -110,7 +108,7 @@ def latin2ascii(s):
 def main():
     parser = argparse.ArgumentParser(description='Convert latin1 characters into ascii.')
     parser.add_argument('file', nargs='*', type=argparse.FileType('r'), default=sys.stdin, help='file(s) to convert')
-    parser.add_argument('-c', metavar='codec', default='utf-8', nargs=1, help='input text encoding (default: %(default)s)')
+    parser.add_argument('-c', metavar='codec', default='utf-8', help='input text encoding (default: %(default)s)')
     args = parser.parse_args()
     for f in args.file:
         for line in f:

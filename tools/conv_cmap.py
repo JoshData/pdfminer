@@ -1,18 +1,22 @@
 #!/usr/bin/env python2
-import sys
-import os.path
-import gzip
-import cPickle as pickle
 
-def process_cid2code(fp, check_codecs=[]):
+import cPickle as pickle
+import gzip
+import os.path
+import sys
+
+
+def process_cid2code(fp, check_codecs=None):
+    if check_codecs is None:
+        check_codecs = []
 
     def get_canonicals(name):
         if name.endswith('-H'):
-            return (name, None)
+            return name, None
         elif name == 'H':
-            return ('H', 'V')
+            return 'H', 'V'
         else:
-            return (name+'-H', name+'-V')
+            return name+'-H', name+'-V'
 
     def get_unichr(codes):
         # determine the "most popular" candidate.
@@ -27,7 +31,7 @@ def process_cid2code(fp, check_codecs=[]):
                     d[char] += 1
                 except UnicodeError:
                     pass
-        chars = sorted(d.keys(), key=lambda char:d[char], reverse=True)
+        chars = sorted(d.keys(), key=lambda char: d[char], reverse=True)
         return chars[0]
 
     def put(dmap, code, cid, force=False):
@@ -45,11 +49,11 @@ def process_cid2code(fp, check_codecs=[]):
         return
 
     names = []
-    code2cid = {} # {'cmapname': ...}
+    code2cid = {}  # {'cmapname': ...}
     is_vertical = {}
-    cid2unichr_h = {} # {cid: unichr}
-    cid2unichr_v = {} # {cid: unichr}
-    
+    cid2unichr_h = {}  # {cid: unichr}
+    cid2unichr_v = {}  # {cid: unichr}
+
     for line in fp:
         line = line.strip()
         if line.startswith('#'): continue
@@ -57,10 +61,12 @@ def process_cid2code(fp, check_codecs=[]):
             names = line.split('\t')[1:]
             continue
         f = line.split('\t')
-        if not f: continue
+        if not f:
+            continue
         cid = int(f[0])
         for (x,name) in zip(f[1:], names):
-            if x == '*': continue
+            if x == '*':
+                continue
             (hmapname, vmapname) = get_canonicals(name)
             if hmapname in code2cid:
                 hmap = code2cid[hmapname]
@@ -111,11 +117,13 @@ def process_cid2code(fp, check_codecs=[]):
                     if cid not in cid2unichr_v:
                         cid2unichr_v[cid] = code
 
-    return (code2cid, is_vertical, cid2unichr_h, cid2unichr_v)
+    return code2cid, is_vertical, cid2unichr_h, cid2unichr_v
 
 
-def convert(outdir, regname, src, check_codecs=[]):
+def convert(outdir, regname, src, check_codecs=None):
     print >>sys.stderr, 'reading %r...' % src
+    if check_codecs is None:
+        check_codecs = []
     fp = file(src)
     (code2cid, is_vertical, cid2unichr_h, cid2unichr_v) = process_cid2code(fp, check_codecs)
     fp.close()
@@ -152,10 +160,12 @@ def main(argv):
         return 100
     
     args = argv[1:]
-    if len(args) < 3: return usage()
+    if len(args) < 3:
+        return usage()
     (outdir, regname, src) = args[:3]
     check_codecs = args[3:]
 
     return convert(outdir, regname, src, check_codecs)
 
-if __name__ == '__main__': sys.exit(main(sys.argv))
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))

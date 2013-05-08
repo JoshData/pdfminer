@@ -72,4 +72,4 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     'License :: OSI Approved :: MIT License',
     'Topic :: Text Processing',
     ],
-    )
+)
