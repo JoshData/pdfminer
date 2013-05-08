@@ -113,6 +113,47 @@ def drange(v0, v1, d):
     assert v0 < v1
     return xrange(int(v0)/d, int(v1+d)/d)
 
+
+def dist(obj1, obj2):
+    """A distance function between two TextBoxes.
+
+    Consider the bounding rectangle for obj1 and obj2.
+    Return its area less the areas of obj1 and obj2,
+    shown as 'www' below. This value may be negative.
+            +------+..........+ (x1,y1)
+            | obj1 |wwwwwwwwww:
+            +------+www+------+
+            :wwwwwwwwww| obj2 |
+    (x0,y0) +..........+------+
+    """
+    (x0, y0, x1, y1) = tb_bound(obj1, obj2)
+    return (x1 - x0) * (y1 - y0) - obj1.width * obj1.height - obj2.width * obj2.height
+
+
+def isany(obj1, obj2, plane):
+    """Check if there's any other object between obj1 and obj2.
+    """
+    for obj in plane.find(tb_bound(obj1, obj2)):
+        if obj not in (obj1, obj2):
+            return False
+    return True
+
+
+def tb_bound(obj1, obj2):
+    x0 = obj2.x0
+    if obj1.x0 < obj2.x0:
+        x0 = obj1.x0
+    y0 = obj2.y0
+    if obj1.y0 < obj2.y0:
+        y0 = obj1.y0
+    x1 = obj2.x1
+    if obj1.x1 > obj2.x1:
+        x1 = obj1.x1
+    y1 = obj2.y1
+    if obj1.y1 > obj2.y1:
+        y1 = obj1.y1
+    return x0, y0, x1, y1
+
 # get_bound
 def get_bound(pts):
     """Compute a minimal rectangle that covers all the points."""
