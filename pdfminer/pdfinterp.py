@@ -207,10 +207,7 @@ class PDFContentParser(PSStackParser):
                 self.istream += 1
             else:
                 raise PSEOF('Unexpected EOF, file truncated?')
-            data = strm.get_data()
-            if isinstance(data, bytes):
-                data = data.decode('latin-1')
-            self.fp = StringIO(data)
+            self.fp = StringIO(strm.get_data())
         return
 
     def seek(self, pos):
@@ -677,8 +674,7 @@ class PDFPageInterpreter(object):
         except KeyError:
             if STRICT:
                 raise PDFInterpreterError('Undefined Font id: %r' % fontid)
-            self.textstate.font = PDFType1Font(
-                self.rsrcmgr, {'BaseFont': 'Times-Roman'})
+            self.textstate.font = PDFType1Font(self.rsrcmgr, {'BaseFont': 'Times-Roman'})
         self.textstate.fontsize = fontsize
         return
 

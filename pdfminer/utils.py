@@ -128,12 +128,11 @@ def dist(obj1, obj2):
 
 
 def isany(obj1, obj2, plane):
-    """Check if there's any other object between obj1 and obj2.
-    """
+    """Check if there's any other object between obj1 and obj2."""
     for obj in plane.find(tb_bound(obj1, obj2)):
         if obj not in (obj1, obj2):
-            return False
-    return True
+            return True
+    return False
 
 
 def tb_bound(obj1, obj2):
@@ -316,8 +315,8 @@ class Plane(object):
                 yield (x, y)
         return
 
-    # get points with data from grid in range
     def _gridrange(self, (x0, y0, x1, y1)):
+        """Get points with data from grid in range."""
         gx0 = int(x0) / self.gridsize
         gx1 = int(x1 + self.gridsize) / self.gridsize
         gy0 = int(y0)/self.gridsize
@@ -333,8 +332,8 @@ class Plane(object):
         for point in ((x, y) for (x, y) in self._grid.keys() if gx0 <= x < gx1 and gy0 <= y < gy1):
             yield point
 
-    # add(obj): place an object.
     def add(self, obj):
+        """Place an object."""
         x0, y0, x1, y1 = obj.x0, obj.y0, obj.x1, obj.y1
         if (x1 - x0) * (y1 - y0) > self.largearea:
             self._large.add(obj)
