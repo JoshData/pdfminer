@@ -35,7 +35,7 @@ from pdfminer.layout import LAParams
 from pdfminer.image import ImageWriter
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Convert PDF into text.')
     parser.add_argument('file', nargs='*', type=argparse.FileType('rb'), default=sys.stdin, help='file(s) to convert')
     parser.add_argument('-d', metavar='debug', nargs='?', default=argparse.SUPPRESS, type=int, help='debug level')
@@ -58,7 +58,7 @@ def main():
     lagroup.add_argument('-F', metavar='boxes_flow', type=float, help='custom boxes flow')
     lagroup.add_argument('-Y', metavar='layout_mode', default='normal', help='layout mode for HTML (normal, exact, loose)')
     lagroup.add_argument('-s', metavar='scale', default=1, type=float, help='output scaling for HTML')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     debug = int(args.d or 1) if 'd' in args else 0
     PDFDocument.debug = debug
@@ -107,7 +107,8 @@ def main():
                     caching=args.cache, check_extractable=True)
         fp.close()
     device.close()
-    args.o.close()
+    if args.o is not sys.stdout:
+        args.o.close()
 
 
 if __name__ == '__main__':

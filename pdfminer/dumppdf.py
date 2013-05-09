@@ -237,7 +237,7 @@ def dumppdf(outfp, fp, objids, pagenos, password='', dumpall=False, codec=None):
     return
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Dump pdf contents in XML format.')
     parser.add_argument('file', nargs='*', type=argparse.FileType('rb'), default=sys.stdin, help='file(s) to dump')
     parser.add_argument('-d', metavar='debug', nargs='?', default=argparse.SUPPRESS, type=int, help='debug level')
@@ -251,7 +251,7 @@ def main():
     parser.add_argument('-i', metavar='objid', nargs='+', default=[],  type=int, help='object id(s) (space separated)')
     parser.add_argument('-o', metavar='outfile', type=argparse.FileType('wb'), default=sys.stdout,
                         help='output file name (default: stdout)')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     debug = int(args.d or 1) if 'd' in args else 0
     PDFDocument.debug = debug
     PDFParser.debug = debug

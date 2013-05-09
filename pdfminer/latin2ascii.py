@@ -105,11 +105,11 @@ def latin2ascii(s):
     return ''.join(LATIN2ASCII.get(ord(c), c) for c in s)
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='Convert latin1 characters into ascii.')
     parser.add_argument('file', nargs='*', type=argparse.FileType('r'), default=sys.stdin, help='file(s) to convert')
     parser.add_argument('-c', metavar='codec', default='utf-8', help='input text encoding (default: %(default)s)')
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     for f in args.file:
         for line in f:
             line = latin2ascii(unicode(line, args.codec, 'ignore'))
