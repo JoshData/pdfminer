@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-from distutils.command.build import build
+from distutils.command.build_py import build_py
 from distutils.command.clean import clean
 from setuptools import setup
 from pdfminer import __version__
@@ -13,7 +13,7 @@ cmapdir = 'pdfminer/cmap'
 samplesdir = 'samples'
 
 
-class CustomBuild(build):
+class CustomBuild(build_py):
     def run(self):
         # Build cmap directory
         try:
@@ -25,7 +25,7 @@ class CustomBuild(build):
         conv_cmap.convert(cmapdir, 'Adobe-GB1', 'cmaprsrc/cid2code_Adobe_GB1.txt', ['cp936', 'gb2312'])
         conv_cmap.convert(cmapdir, 'Adobe-Japan1', 'cmaprsrc/cid2code_Adobe_Japan1.txt', ['cp932', 'euc-jp'])
         conv_cmap.convert(cmapdir, 'Adobe-Korea1', 'cmaprsrc/cid2code_Adobe_Korea1.txt', ['cp949', 'euc-kr'])
-        build.run(self)  # Continue with regular build
+        build_py.run(self)  # Continue with regular build
 
 
 class CustomClean(clean):
@@ -54,8 +54,10 @@ PDF parser that can be used for other purposes instead of text analysis.''',
     license='MIT/X',
     author='Yusuke Shinyama',
     author_email='yusuke at cs dot nyu dot edu',
+    maintainer='Matt Swain',
+    maintainer_email='m.swain@me.com',
     url='http://www.unixuser.org/~euske/python/pdfminer/index.html',
-    cmdclass={'build': CustomBuild, 'clean': CustomClean},
+    cmdclass={'build_py': CustomBuild, 'clean': CustomClean},
     packages=[
     'pdfminer',
     ],
