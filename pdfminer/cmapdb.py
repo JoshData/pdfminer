@@ -34,7 +34,6 @@ class CMap(object):
 
     def __init__(self, code2cid=None):
         self.code2cid = code2cid or {}
-        return
 
     def is_vertical(self):
         return False
@@ -51,7 +50,6 @@ class CMap(object):
                 else:
                     dst[k] = v
         copy(self.code2cid, cmap.code2cid)
-        return
 
     def decode(self, code):
         if self.debug:
@@ -66,7 +64,6 @@ class CMap(object):
                     d = self.code2cid
             else:
                 d = self.code2cid
-        return
 
     def dump(self, out=sys.stdout, code2cid=None, code=None):
         if code2cid is None:
@@ -78,14 +75,12 @@ class CMap(object):
                 out.write('code %r = cid %d\n' % (c, v))
             else:
                 self.dump(out=out, code2cid=v, code=c)
-        return
     
 
 class IdentityCMap(object):
 
     def __init__(self, vertical):
         self.vertical = vertical
-        return
 
     def is_vertical(self):
         return self.vertical
@@ -104,7 +99,6 @@ class UnicodeMap(object):
 
     def __init__(self, cid2unichr=None):
         self.cid2unichr = cid2unichr or {}
-        return
 
     def get_unichr(self, cid):
         if self.debug:
@@ -112,9 +106,8 @@ class UnicodeMap(object):
         return self.cid2unichr[cid]
 
     def dump(self, out=sys.stdout):
-        for (k,v) in sorted(self.cid2unichr.iteritems()):
+        for (k, v) in sorted(self.cid2unichr.iteritems()):
             out.write('cid %d = unicode %r\n' % (k, v))
-        return
 
 
 class FileCMap(CMap):
@@ -122,7 +115,6 @@ class FileCMap(CMap):
     def __init__(self):
         CMap.__init__(self)
         self.attrs = {}
-        return
 
     def __repr__(self):
         return '<CMap: %s>' % self.attrs.get('CMapName')
@@ -132,7 +124,6 @@ class FileCMap(CMap):
 
     def set_attr(self, k, v):
         self.attrs[k] = v
-        return
 
     def add_code2cid(self, code, cid):
         assert isinstance(code, str) and isinstance(cid, int)
@@ -147,7 +138,6 @@ class FileCMap(CMap):
                 d = t
         c = ord(code[-1])
         d[c] = cid
-        return
 
 
 class FileUnicodeMap(UnicodeMap):
@@ -155,14 +145,12 @@ class FileUnicodeMap(UnicodeMap):
     def __init__(self):
         UnicodeMap.__init__(self)
         self.attrs = {}
-        return
 
     def __repr__(self):
         return '<UnicodeMap: %s>' % self.attrs.get('CMapName')
 
     def set_attr(self, k, v):
         self.attrs[k] = v
-        return
 
     def add_cid2unichr(self, cid, code):
         assert isinstance(cid, int)
@@ -176,7 +164,6 @@ class FileUnicodeMap(UnicodeMap):
             self.cid2unichr[cid] = unichr(code)
         else:
             raise TypeError(code)
-        return
 
 
 class PyCMap(CMap):
@@ -185,7 +172,6 @@ class PyCMap(CMap):
         CMap.__init__(self, module.CODE2CID)
         self.name = name
         self._is_vertical = module.IS_VERTICAL
-        return
 
     def __repr__(self):
         return '<PyCMap: %s>' % self.name
@@ -203,7 +189,6 @@ class PyUnicodeMap(UnicodeMap):
             cid2unichr = module.CID2UNICHR_H
         UnicodeMap.__init__(self, cid2unichr)
         self.name = name
-        return
 
     def __repr__(self):
         return '<PyUnicodeMap: %s>' % self.name
@@ -269,14 +254,12 @@ class CMapParser(PSStackParser):
         PSStackParser.__init__(self, fp)
         self.cmap = cmap
         self._in_cmap = False
-        return
 
     def run(self):
         try:
             self.nextobject()
         except PSEOF:
             pass
-        return
 
     def do_keyword(self, pos, token):
         name = token.name
@@ -341,7 +324,7 @@ class CMapParser(PSStackParser):
             self.popall()
             return
         if name == 'endcidchar':
-            objs = [obj for (_,obj) in self.popall()]
+            objs = [obj for (_, obj) in self.popall()]
             for (cid, code) in choplist(2, objs):
                 if isinstance(code, str) and isinstance(cid, str):
                     self.cmap.add_code2cid(code, nunpack(cid))
@@ -351,7 +334,7 @@ class CMapParser(PSStackParser):
             self.popall()
             return
         if name == 'endbfrange':
-            objs = [obj for (_,obj) in self.popall()]
+            objs = [obj for (_, obj) in self.popall()]
             for (s, e, code) in choplist(3, objs):
                 if not isinstance(s, str) or not isinstance(e, str) or len(s) != len(e):
                     continue
@@ -367,7 +350,7 @@ class CMapParser(PSStackParser):
                     prefix = code[:-4]
                     vlen = len(var)
                     for i in xrange(e1 - s1 + 1):
-                        x = prefix+struct.pack('>L',base + i)[-vlen:]
+                        x = prefix+struct.pack('>L', base + i)[-vlen:]
                         self.cmap.add_cid2unichr(s1 + i, x)
             return
 
@@ -389,11 +372,9 @@ class CMapParser(PSStackParser):
             return
 
         self.push((pos, token))
-        return
 
 
 def main(argv):
-    """Test."""
     args = argv[1:]
     for fname in args:
         fp = file(fname, 'rb')
@@ -402,7 +383,6 @@ def main(argv):
         CMapParser(cmap, fp).run()
         fp.close()
         cmap.dump()
-    return
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))

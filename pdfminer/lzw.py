@@ -21,7 +21,6 @@ class LZWDecoder(object):
         self.nbits = 9
         self.table = None
         self.prevbuf = None
-        return
 
     def readbits(self, bits):
         v = 0
@@ -94,7 +93,6 @@ class LZWDecoder(object):
             yield x
             if self.debug:
                 print >>sys.stderr, ('nbits=%d, code=%d, output=%r, table=%r' % (self.nbits, code, x, self.table[258:]))
-        return
 
 
 def lzwdecode(data):

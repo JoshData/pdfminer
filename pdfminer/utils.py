@@ -84,7 +84,6 @@ def uniq(objs):
             continue
         done.add(obj)
         yield obj
-    return
 
 
 def csort(objs, key=lambda x: x):
@@ -180,7 +179,6 @@ def choplist(n, seq):
         if len(r) == n:
             yield tuple(r)
             r = []
-    return
 
 
 def nunpack(s, default=0):
@@ -264,7 +262,6 @@ class ObjIdRange(object):
     def __init__(self, start, nobjs):
         self.start = start
         self.nobjs = nobjs
-        return
 
     def __repr__(self):
         return '<ObjIdRange: %d-%d>' % (self.get_start_id(), self.get_end_id())
@@ -295,7 +292,6 @@ class Plane(object):
         if objs is not None:
             for obj in objs:
                 self.add(obj)
-        return
 
     def __repr__(self):
         return '<Plane objs=%r>' % list(self)
@@ -313,7 +309,6 @@ class Plane(object):
         for y in drange(y0, y1, self.gridsize):
             for x in drange(x0, x1, self.gridsize):
                 yield (x, y)
-        return
 
     def _gridrange(self, (x0, y0, x1, y1)):
         """Get points with data from grid in range."""
@@ -326,8 +321,6 @@ class Plane(object):
                 for x in xrange(gx0, gx1):
                     if (x, y) in self._grid:
                         yield (x, y)
-
-            return
 
         for point in ((x, y) for (x, y) in self._grid.keys() if gx0 <= x < gx1 and gy0 <= y < gy1):
             yield point
@@ -346,7 +339,6 @@ class Plane(object):
                     r = self._grid[k]
                 r.add(obj)
         self._objs.add(obj)
-        return
 
     def remove(self, obj):
         """Displace an object."""
@@ -361,7 +353,6 @@ class Plane(object):
 
         self._objs.discard(obj)
         self._large.discard(obj)
-        return
 
     def find(self, (x0, y0, x1, y1)):
         """Find objects that are in a certain area."""
@@ -378,5 +369,3 @@ class Plane(object):
         for obj in self._large:
             if obj.x1 > x0 and x1 > obj.x0 and obj.y1 > y0 and y1 > obj.y0:
                 yield obj
-
-        return

@@ -1052,7 +1052,6 @@ class RijndaelDecryptor(object):
         (self.rk, self.nrounds) = rijndaelSetupDecrypt(key, keybits)
         assert len(self.rk) == RKLENGTH(keybits)
         assert self.nrounds == NROUNDS(keybits)
-        return
 
     def decrypt(self, ciphertext):
         assert len(ciphertext) == 16
@@ -1066,7 +1065,6 @@ class RijndaelEncryptor(object):
         (self.rk, self.nrounds) = rijndaelSetupEncrypt(key, keybits)
         assert len(self.rk) == RKLENGTH(keybits)
         assert self.nrounds == NROUNDS(keybits)
-        return
 
     def encrypt(self, plaintext):
         assert len(plaintext) == 16

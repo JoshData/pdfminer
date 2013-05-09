@@ -114,7 +114,6 @@ def main(argv=None):
         for line in f:
             line = latin2ascii(unicode(line, args.codec, 'ignore'))
             sys.stdout.write(line.encode('ascii', 'replace'))
-    return
 
 
 if __name__ == '__main__':

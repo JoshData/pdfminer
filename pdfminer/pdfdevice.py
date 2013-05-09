@@ -12,7 +12,6 @@ class PDFDevice(object):
     def __init__(self, rsrcmgr):
         self.rsrcmgr = rsrcmgr
         self.ctm = None
-        return
 
     def __repr__(self):
         return '<PDFDevice>'
@@ -22,7 +21,6 @@ class PDFDevice(object):
 
     def set_ctm(self, ctm):
         self.ctm = ctm
-        return
 
     def begin_tag(self, tag, props=None):
         return
@@ -76,7 +74,6 @@ class PDFTextDevice(PDFDevice):
             textstate.linematrix = self.render_string_horizontal(
                 seq, matrix, textstate.linematrix, font, fontsize,
                 scaling, charspace, wordspace, rise, dxscale)
-        return
 
     def render_string_horizontal(self, seq, matrix, (x, y),
                                  font, fontsize, scaling, charspace, wordspace, rise, dxscale):
@@ -125,7 +122,6 @@ class TagExtractor(PDFDevice):
         self.debug = debug
         self.pageno = 0
         self._stack = []
-        return
 
     def render_string(self, textstate, seq):
         font = textstate.font
@@ -140,16 +136,13 @@ class TagExtractor(PDFDevice):
                 except PDFUnicodeNotDefined:
                     pass
         self.outfp.write(enc(text, self.codec))
-        return
 
     def begin_page(self, page, ctm):
         self.outfp.write('<page id="%s" bbox="%s" rotate="%d">' % (self.pageno, bbox2str(page.mediabox), page.rotate))
-        return
 
     def end_page(self, page):
         self.outfp.write('</page>\n')
         self.pageno += 1
-        return
 
     def begin_tag(self, tag, props=None):
         s = ''
@@ -157,15 +150,12 @@ class TagExtractor(PDFDevice):
             s = ''.join(' %s="%s"' % (enc(k), enc(str(v))) for (k, v) in sorted(props.iteritems()))
         self.outfp.write('<%s%s>' % (enc(tag.name), s))
         self._stack.append(tag)
-        return
 
     def end_tag(self):
         assert self._stack
         tag = self._stack.pop(-1)
         self.outfp.write('</%s>' % enc(tag.name))
-        return
 
     def do_tag(self, tag, props=None):
         self.begin_tag(tag, props)
         self._stack.pop(-1)
-        return

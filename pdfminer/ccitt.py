@@ -11,14 +11,12 @@ ITU-T Recommendation T.6 "FACSIMILE CODING SCHEMES AND CODING CONTROL FUNCTIONS 
 
 import array
 import sys
-import unittest
 
 
 class BitParser(object):
 
     def __init__(self):
         self._pos = 0
-        return
 
     @classmethod
     def add(cls, root, v, bits):
@@ -33,14 +31,12 @@ class BitParser(object):
             else:
                 b = 0
         p[b] = v
-        return
 
     def feedbytes(self, data):
         for c in data:
             b = ord(c)
             for m in (128, 64, 32, 16, 8, 4, 2, 1):
                 self._parse_bit(b & m)
-        return
 
     def _parse_bit(self, x):
         if x:
@@ -52,7 +48,6 @@ class BitParser(object):
             self._state = v
         else:
             self._state = self._accept(v)
-        return
 
 
 ##  CCITTG4Parser
@@ -292,20 +287,20 @@ class CCITTG4Parser(BitParser):
     BitParser.add(BLACK, 2560, '000000011111')
 
     UNCOMPRESSED = [None,None]
-    BitParser.add(UNCOMPRESSED, '1' , '1')
-    BitParser.add(UNCOMPRESSED, '01' , '01')
-    BitParser.add(UNCOMPRESSED, '001' , '001')
-    BitParser.add(UNCOMPRESSED, '0001' , '0001')
-    BitParser.add(UNCOMPRESSED, '00001' , '00001')
-    BitParser.add(UNCOMPRESSED, '00000' , '000001')
-    BitParser.add(UNCOMPRESSED, 'T00' , '00000011')
-    BitParser.add(UNCOMPRESSED, 'T10' , '00000010')
-    BitParser.add(UNCOMPRESSED, 'T000' , '000000011')
-    BitParser.add(UNCOMPRESSED, 'T100' , '000000010')
-    BitParser.add(UNCOMPRESSED, 'T0000' , '0000000011')
-    BitParser.add(UNCOMPRESSED, 'T1000' , '0000000010')
-    BitParser.add(UNCOMPRESSED, 'T00000' , '00000000011')
-    BitParser.add(UNCOMPRESSED, 'T10000' , '00000000010')
+    BitParser.add(UNCOMPRESSED, '1', '1')
+    BitParser.add(UNCOMPRESSED, '01', '01')
+    BitParser.add(UNCOMPRESSED, '001', '001')
+    BitParser.add(UNCOMPRESSED, '0001', '0001')
+    BitParser.add(UNCOMPRESSED, '00001', '00001')
+    BitParser.add(UNCOMPRESSED, '00000', '000001')
+    BitParser.add(UNCOMPRESSED, 'T00', '00000011')
+    BitParser.add(UNCOMPRESSED, 'T10', '00000010')
+    BitParser.add(UNCOMPRESSED, 'T000', '000000011')
+    BitParser.add(UNCOMPRESSED, 'T100', '000000010')
+    BitParser.add(UNCOMPRESSED, 'T0000', '0000000011')
+    BitParser.add(UNCOMPRESSED, 'T1000', '0000000010')
+    BitParser.add(UNCOMPRESSED, 'T00000', '00000000011')
+    BitParser.add(UNCOMPRESSED, 'T10000', '00000000010')
     
     class EOFB(Exception):
         pass
@@ -321,7 +316,6 @@ class CCITTG4Parser(BitParser):
         self.width = width
         self.bytealign = bytealign
         self.reset()
-        return
 
     def feedbytes(self, data):
         for c in data:
@@ -334,7 +328,6 @@ class CCITTG4Parser(BitParser):
                 self._state = self.MODE
             except self.EOFB:
                 break
-        return
 
     def _parse_mode(self, mode):
         if mode == 'p':
@@ -378,7 +371,7 @@ class CCITTG4Parser(BitParser):
             raise self.InvalidData
         self._n2 += n
         if n < 64:
-            self._color = 1-self._color
+            self._color = 1 - self._color
             self._accept = self._parse_mode
             self._do_horizontal(self._n1, self._n2)
             self._flush_line()
@@ -411,26 +404,23 @@ class CCITTG4Parser(BitParser):
         else:
             return (''.join(str(b) for b in self._refline[:i]) +
                     '[' + str(self._refline[i]) + ']' +
-                    ''.join(str(b) for b in self._refline[i+1:]))
+                    ''.join(str(b) for b in self._refline[i + 1:]))
 
     def reset(self):
         self._y = 0
-        self._curline = array.array('b', [1]*self.width)
+        self._curline = array.array('b', [1] * self.width)
         self._reset_line()
         self._accept = self._parse_mode
         self._state = self.MODE
-        return
 
     def output_line(self, y, bits):
         print y, ''.join(str(b) for b in bits)
-        return
     
     def _reset_line(self):
         self._refline = self._curline
         self._curline = array.array('b', [1] * self.width)
         self._curpos = -1
         self._color = 1
-        return
         
     def _flush_line(self):
         if self.width <= self._curpos:
@@ -439,19 +429,18 @@ class CCITTG4Parser(BitParser):
             self._reset_line()
             if self.bytealign:
                 raise self.ByteSkip
-        return
 
     def _do_vertical(self, dx):
         #print '* vertical(%d): curpos=%r, color=%r' % (dx, self._curpos, self._color)
         #print '  refline:', self._get_refline(self._curpos+1)
-        x1 = self._curpos+1
+        x1 = self._curpos + 1
         while 1:
             if x1 == 0:
                 if self._color == 1 and self._refline[x1] != self._color:
                     break
             elif x1 == len(self._refline):
                 break
-            elif self._refline[x1-1] == self._color and self._refline[x1] != self._color:
+            elif self._refline[x1 - 1] == self._color and self._refline[x1] != self._color:
                 break
             x1 += 1
         x1 += dx
@@ -464,20 +453,19 @@ class CCITTG4Parser(BitParser):
             for x in xrange(x0, x1):
                 self._curline[x] = self._color
         self._curpos = x1
-        self._color = 1-self._color
-        return
+        self._color = 1 - self._color
     
     def _do_pass(self):
         #print '* pass: curpos=%r, color=%r' % (self._curpos, self._color)
         #print '  refline:', self._get_refline(self._curpos+1)
-        x1 = self._curpos+1
+        x1 = self._curpos + 1
         while 1:
             if x1 == 0:
                 if self._color == 1 and self._refline[x1] != self._color:
                     break
             elif x1 == len(self._refline):
                 break
-            elif self._refline[x1-1] == self._color and self._refline[x1] != self._color:
+            elif self._refline[x1 - 1] == self._color and self._refline[x1] != self._color:
                 break
             x1 += 1
         while 1:
@@ -486,13 +474,12 @@ class CCITTG4Parser(BitParser):
                     break
             elif x1 == len(self._refline):
                 break
-            elif self._refline[x1-1] != self._color and self._refline[x1] == self._color:
+            elif self._refline[x1 - 1] != self._color and self._refline[x1] == self._color:
                 break
             x1 += 1
         for x in xrange(self._curpos, x1):
             self._curline[x] = self._color
         self._curpos = x1
-        return
     
     def _do_horizontal(self, n1, n2):
         #print '* horizontal(%d,%d): curpos=%r, color=%r' % (n1, n2, self._curpos, self._color)
@@ -510,7 +497,6 @@ class CCITTG4Parser(BitParser):
             self._curline[x] = 1 - self._color
             x += 1
         self._curpos = x
-        return
     
     def _do_uncompressed(self, bits):
         #print '* uncompressed(%r): curpos=%r' % (bits, self._curpos)
@@ -518,160 +504,6 @@ class CCITTG4Parser(BitParser):
             self._curline[self._curpos] = int(c)
             self._curpos += 1
             self._flush_line()
-        return
-
-
-class TestCCITTG4Parser(unittest.TestCase):
-
-    def get_parser(self, bits):
-        parser = CCITTG4Parser(len(bits))
-        parser._curline = [int(c) for c in bits]
-        parser._reset_line()
-        return parser
-
-    def test_b1(self):
-        parser = self.get_parser('00000')
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 0)
-        return
-
-    def test_b2(self):
-        parser = self.get_parser('10000')
-        parser._do_vertical(-1)
-        self.assertEqual(parser._curpos, 0)
-        return
-
-    def test_b3(self):
-        parser = self.get_parser('000111')
-        parser._do_pass()
-        self.assertEqual(parser._curpos, 3)
-        self.assertEqual(parser._get_bits(), '111')
-        return
-
-    def test_b4(self):
-        parser = self.get_parser('00000')
-        parser._do_vertical(+2)
-        self.assertEqual(parser._curpos, 2)
-        self.assertEqual(parser._get_bits(), '11')
-        return
-
-    def test_b5(self):
-        parser = self.get_parser('11111111100')
-        parser._do_horizontal(0, 3)
-        self.assertEqual(parser._curpos, 3)
-        parser._do_vertical(1)
-        self.assertEqual(parser._curpos, 10)
-        self.assertEqual(parser._get_bits(), '0001111111')
-        return
-
-    def test_e1(self):
-        parser = self.get_parser('10000')
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 1)
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 5)
-        self.assertEqual(parser._get_bits(), '10000')
-        return
-
-    def test_e2(self):
-        parser = self.get_parser('10011')
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 1)
-        parser._do_vertical(2)
-        self.assertEqual(parser._curpos, 5)
-        self.assertEqual(parser._get_bits(), '10000')
-        return
-
-    def test_e3(self):
-        parser = self.get_parser('011111')
-        parser._color = 0
-        parser._do_vertical(0)
-        self.assertEqual(parser._color, 1)
-        self.assertEqual(parser._curpos, 1)
-        parser._do_vertical(-2)
-        self.assertEqual(parser._color, 0)
-        self.assertEqual(parser._curpos, 4)
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 6)
-        self.assertEqual(parser._get_bits(), '011100')
-        return
-
-    def test_e4(self):
-        parser = self.get_parser('10000')
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 1)
-        parser._do_vertical(-2)
-        self.assertEqual(parser._curpos, 3)
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 5)
-        self.assertEqual(parser._get_bits(), '10011')
-        return
-
-    def test_e5(self):
-        parser = self.get_parser('011000')
-        parser._color = 0
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 1)
-        parser._do_vertical(3)
-        self.assertEqual(parser._curpos, 6)
-        self.assertEqual(parser._get_bits(), '011111')
-        return
-
-    def test_e6(self):
-        parser = self.get_parser('11001')
-        parser._do_pass()
-        self.assertEqual(parser._curpos, 4)
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 5)
-        self.assertEqual(parser._get_bits(), '11111')
-        return
-
-    def test_e7(self):
-        parser = self.get_parser('0000000000')
-        parser._curpos = 2
-        parser._color = 1
-        parser._do_horizontal(2, 6)
-        self.assertEqual(parser._curpos, 10)
-        self.assertEqual(parser._get_bits(), '1111000000')
-        return
-
-    def test_e8(self):
-        parser = self.get_parser('001100000')
-        parser._curpos = 1
-        parser._color = 0
-        parser._do_vertical(0)
-        self.assertEqual(parser._curpos, 2)
-        parser._do_horizontal(7, 0)
-        self.assertEqual(parser._curpos, 9)
-        self.assertEqual(parser._get_bits(), '101111111')
-        return
-
-    def test_m1(self):
-        parser = self.get_parser('10101')
-        parser._do_pass()
-        self.assertEqual(parser._curpos, 2)
-        parser._do_pass()
-        self.assertEqual(parser._curpos, 4)
-        self.assertEqual(parser._get_bits(), '1111')
-        return
-
-    def test_m2(self):
-        parser = self.get_parser('101011')
-        parser._do_vertical(-1)
-        parser._do_vertical(-1)
-        parser._do_vertical(1)
-        parser._do_horizontal(1, 1)
-        self.assertEqual(parser._get_bits(), '011101')
-        return
-
-    def test_m3(self):
-        parser = self.get_parser('10111011')
-        parser._do_vertical(-1)
-        parser._do_pass()
-        parser._do_vertical(1)
-        parser._do_vertical(1)
-        self.assertEqual(parser._get_bits(), '00000001')
-        return
 
 
 class CCITTFaxDecoder(CCITTG4Parser):
@@ -680,7 +512,6 @@ class CCITTFaxDecoder(CCITTG4Parser):
         CCITTG4Parser.__init__(self, width, bytealign=bytealign)
         self.reversed = reversed
         self._buf = ''
-        return
     
     def close(self):
         return self._buf
@@ -689,11 +520,10 @@ class CCITTFaxDecoder(CCITTG4Parser):
         thebytes = array.array('B', [0] * ((len(bits) + 7) / 8))
         if self.reversed:
             bits = [1-b for b in bits]
-        for (i,b) in enumerate(bits):
+        for (i, b) in enumerate(bits):
             if b:
-                thebytes[i/8] += (128, 64, 32, 16, 8, 4, 2, 1)[i % 8]
+                thebytes[i / 8] += (128, 64, 32, 16, 8, 4, 2, 1)[i % 8]
         self._buf += thebytes.tostring()
-        return
 
 
 def ccittfaxdecode(data, params):
@@ -707,35 +537,3 @@ def ccittfaxdecode(data, params):
         raise ValueError(K)
     parser.feedbytes(data)
     return parser.close()
-
-
-def main(argv):
-    """Test."""
-    import pygame
-    if not argv[1:]:
-        return unittest.main()
-    class Parser(CCITTG4Parser):
-        def __init__(self, width, bytealign=False):
-            CCITTG4Parser.__init__(self, width, bytealign=bytealign)
-            self.img = pygame.Surface((self.width, 1000))
-            return
-        def output_line(self, y, bits):
-            for (x,b) in enumerate(bits):
-                if b:
-                    self.img.set_at((x, y), (255, 255, 255))
-                else:
-                    self.img.set_at((x, y), (0, 0, 0))
-            return
-        def close(self):
-            pygame.image.save(self.img, 'out.bmp')
-            return
-    for path in argv[1:]:
-        fp = file(path,'rb')
-        (_, _, k, w, h, _) = path.split('.')
-        parser = Parser(int(w))
-        parser.feedbytes(fp.read())
-        parser.close()
-        fp.close()
-    return
-
-if __name__ == '__main__': sys.exit(main(sys.argv))
