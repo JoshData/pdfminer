@@ -7,13 +7,11 @@ This code is in the public domain.
 
 
 class Arcfour(object):
-    """
-    >>> Arcfour('Key').process('Plaintext').encode('hex')
-    'bbf316e8d940af0ad3'
-    >>> Arcfour('Wiki').process('pedia').encode('hex')
-    '1021bf0420'
-    >>> Arcfour('Secret').process('Attack at dawn').encode('hex')
-    '45a01f645fc35b383552544b9bf5'
+    """Python implementation of Arcfour encryption algorithm.
+
+    Example:
+
+        Arcfour('Key').process('Plaintext').encode('hex')
 
     """
 
@@ -40,8 +38,3 @@ class Arcfour(object):
             r += chr(ord(c) ^ k)
         (self.i, self.j) = (i, j)
         return r
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

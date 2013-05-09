@@ -48,8 +48,7 @@ class LTItem(object):
 class LTText(object):
 
     def __repr__(self):
-        return ('<%s %r>' %
-                (self.__class__.__name__, self.get_text()))
+        return '<%s %r>' % (self.__class__.__name__, self.get_text())
 
     def get_text(self):
         raise NotImplementedError
@@ -63,8 +62,7 @@ class LTComponent(LTItem):
         return
 
     def __repr__(self):
-        return ('<%s %s>' %
-                (self.__class__.__name__, bbox2str(self.bbox)))
+        return '<%s %s>' % (self.__class__.__name__, bbox2str(self.bbox))
 
     def set_bbox(self, (x0, y0, x1, y1)):
         self.x0 = x0
@@ -567,8 +565,7 @@ class LTFigure(LTLayoutContainer):
 
     def __repr__(self):
         return ('<%s(%s) %s matrix=%s>' %
-                (self.__class__.__name__, self.name,
-                 bbox2str(self.bbox), matrix2str(self.matrix)))
+                (self.__class__.__name__, self.name, bbox2str(self.bbox), matrix2str(self.matrix)))
 
     def analyze(self, laparams):
         if not laparams.all_texts:
@@ -587,5 +584,4 @@ class LTPage(LTLayoutContainer):
 
     def __repr__(self):
         return ('<%s(%r) %s rotate=%r>' %
-                (self.__class__.__name__, self.pageid,
-                 bbox2str(self.bbox), self.rotate))
+                (self.__class__.__name__, self.pageid, bbox2str(self.bbox), self.rotate))

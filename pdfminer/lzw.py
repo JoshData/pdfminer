@@ -49,12 +49,12 @@ class LZWDecoder(object):
         return v
 
     def feed(self, code):
-        x = b''
+        x = ''
         if code == 256:
-            self.table = [bytes([i]) for i in range(256)]  # 0-255
+            self.table = [chr(c) for c in xrange(256)]  # 0-255
             self.table.append(None)  # 256
             self.table.append(None)  # 257
-            self.prevbuf = b''
+            self.prevbuf = ''
             self.nbits = 9
         elif code == 257:
             pass
@@ -63,9 +63,9 @@ class LZWDecoder(object):
         else:
             if code < len(self.table):
                 x = self.table[code]
-                self.table.append(self.prevbuf + x[:1])
+                self.table.append(self.prevbuf + x[0])
             elif code == len(self.table):
-                self.table.append(self.prevbuf + self.prevbuf[:1])
+                self.table.append(self.prevbuf + self.prevbuf[0])
                 x = self.table[code]
             else:
                 raise CorruptDataError()
@@ -85,7 +85,7 @@ class LZWDecoder(object):
                 code = self.readbits(self.nbits)
             except EOFError:
                 break
-            x = self.feed(code)
+            #x = self.feed(code)
             try:
                 x = self.feed(code)
             except CorruptDataError:
@@ -98,14 +98,5 @@ class LZWDecoder(object):
 
 
 def lzwdecode(data):
-    """
-    >>> lzwdecode('\x80\x0b\x60\x50\x22\x0c\x0c\x85\x01')
-    '\x2d\x2d\x2d\x2d\x2d\x41\x2d\x2d\x2d\x42'
-    """
     fp = StringIO(data)
     return ''.join(LZWDecoder(fp).run())
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

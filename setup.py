@@ -63,6 +63,7 @@ PDF parser that can be used for other purposes instead of text analysis.''',
             'latin2ascii = pdfminer.latin2ascii:main',
         ]
     },
+    test_suite='tests',
     keywords=['pdf parser', 'pdf converter', 'layout analysis', 'text mining'],
     classifiers=[
     'Development Status :: 4 - Beta',

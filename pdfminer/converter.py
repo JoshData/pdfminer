@@ -76,8 +76,7 @@ class PDFLayoutAnalyzer(PDFTextDevice):
             (x1, y1) = apply_matrix_pt(self.ctm, (x1, y1))
             (x2, y2) = apply_matrix_pt(self.ctm, (x2, y2))
             (x3, y3) = apply_matrix_pt(self.ctm, (x3, y3))
-            if ((x0 == x1 and y1 == y2 and x2 == x3 and y3 == y0) or
-                (y0 == y1 and x1 == x2 and y2 == y3 and x3 == x0)):
+            if (x0 == x1 and y1 == y2 and x2 == x3 and y3 == y0) or (y0 == y1 and x1 == x2 and y2 == y3 and x3 == x0):
                 self.cur_item.add(LTRect(gstate.linewidth, (x0, y0, x2, y2)))
                 return
         # other shapes
@@ -457,8 +456,7 @@ class XMLConverter(PDFConverter):
                     self.outfp.write('<image src="%s" width="%d" height="%d" />\n' %
                                      (enc(name), item.width, item.height))
                 else:
-                    self.outfp.write('<image width="%d" height="%d" />\n' %
-                                     (item.width, item.height))
+                    self.outfp.write('<image width="%d" height="%d" />\n' % (item.width, item.height))
             else:
                 assert 0, item
             return

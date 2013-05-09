@@ -373,13 +373,11 @@ class Plane(object):
                     continue
 
                 done.add(obj)
-                if (obj.x1 > x0 and x1 > obj.x0 and
-                        obj.y1 > y0 and y1 > obj.y0):
+                if obj.x1 > x0 and x1 > obj.x0 and obj.y1 > y0 and y1 > obj.y0:
                     yield obj
 
         for obj in self._large:
-            if (obj.x1 > x0 and x1 > obj.x0 and
-                    obj.y1 > y0 and y1 > obj.y0):
+            if obj.x1 > x0 and x1 > obj.x0 and obj.y1 > y0 and y1 > obj.y0:
                 yield obj
 
         return

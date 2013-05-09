@@ -109,8 +109,7 @@ class PDFGraphicState(object):
     def __repr__(self):
         return ('<PDFGraphicState: linewidth=%r, linecap=%r, linejoin=%r, '
                 ' miterlimit=%r, dash=%r, intent=%r, flatness=%r>' %
-                (self.linewidth, self.linecap, self.linejoin,
-                 self.miterlimit, self.dash, self.intent, self.flatness))
+                (self.linewidth, self.linecap, self.linejoin, self.miterlimit, self.dash, self.intent, self.flatness))
 
 
 class PDFResourceManager(object):

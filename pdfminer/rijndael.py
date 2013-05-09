@@ -946,8 +946,7 @@ def rijndaelEncrypt(rk, nrounds, plaintext):
 def rijndaelDecrypt(rk, nrounds, ciphertext):
     assert len(ciphertext) == 16
 
-    # map byte array block to cipher state
-    # and add initial round key:
+    # map byte array block to cipher state and add initial round key:
     s0 = GETU32(ciphertext[0:4]) ^ rk[0]
     s1 = GETU32(ciphertext[4:8]) ^ rk[1]
     s2 = GETU32(ciphertext[8:12]) ^ rk[2]
@@ -1012,8 +1011,7 @@ def rijndaelDecrypt(rk, nrounds, ciphertext):
 
     plaintext = ''
 
-    # apply last round and
-    # map cipher state to byte array block:
+    # apply last round and map cipher state to byte array block:
     s0 = (
         (Td4[(t0 >> 24)       ] & 0xff000000) ^
         (Td4[(t3 >> 16) & 0xff] & 0x00ff0000) ^
@@ -1048,12 +1046,6 @@ def rijndaelDecrypt(rk, nrounds, ciphertext):
 
 
 class RijndaelDecryptor(object):
-    """
-    >>> key = '00010203050607080a0b0c0d0f101112'.decode('hex')
-    >>> ciphertext = 'd8f532538289ef7d06b506a4fd5be9c9'.decode('hex')
-    >>> RijndaelDecryptor(key, 128).decrypt(ciphertext).encode('hex')
-    '506812a45f08c889b97f5980038b8359'
-    """
 
     def __init__(self, key, keybits=256):
         assert len(key) == KEYLENGTH(keybits)
@@ -1068,12 +1060,6 @@ class RijndaelDecryptor(object):
 
 
 class RijndaelEncryptor(object):
-    """
-    >>> key = '00010203050607080a0b0c0d0f101112'.decode('hex')
-    >>> plaintext = '506812a45f08c889b97f5980038b8359'.decode('hex')
-    >>> RijndaelEncryptor(key, 128).encrypt(plaintext).encode('hex')
-    'd8f532538289ef7d06b506a4fd5be9c9'
-    """
     
     def __init__(self, key, keybits=256):
         assert len(key) == KEYLENGTH(keybits)
@@ -1085,8 +1071,3 @@ class RijndaelEncryptor(object):
     def encrypt(self, plaintext):
         assert len(plaintext) == 16
         return rijndaelEncrypt(self.rk, self.nrounds, plaintext)
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

@@ -226,7 +226,7 @@ class CMapDB(object):
         cmap_paths = (
             os.environ.get('CMAP_PATH', '/usr/share/pdfminer/'),
             os.path.join(os.path.dirname(__file__), 'cmap'),
-            )
+        )
         for directory in cmap_paths:
             path = os.path.join(directory, filename)
             if os.path.exists(path):

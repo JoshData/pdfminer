@@ -21,7 +21,7 @@ def ascii85decode(data):
     
     The sample string is taken from:
       http://en.wikipedia.org/w/index.php?title=Ascii85
-    
+
     >>> ascii85decode('9jqo^BlbD-BleB1DJ+*+F(f,q')
     'Man is distinguished'
     >>> ascii85decode('E,9)oF*2M7/c~>')
@@ -77,8 +77,3 @@ def asciihexdecode(data):
     if m:
         out.append(decode("%c0" % m.group(1)))
     return ''.join(out)
-
-
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
