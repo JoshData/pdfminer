@@ -3,7 +3,7 @@
 import sys
 
 from layout import LTContainer, LTPage, LTText, LTLine, LTRect, LTCurve
-from layout import LTFigure, LTImage, LTChar, LTTextLine
+from layout import LTFigure, LTImage, LTChar, LTAnon, LTTextLine
 from layout import LTTextBox, LTTextBoxVertical, LTTextGroup
 from pdfdevice import PDFTextDevice
 from pdffont import PDFUnicodeNotDefined
@@ -429,9 +429,10 @@ class XMLConverter(PDFConverter):
             elif isinstance(item, LTTextLine):
                 child_str = ''
                 for child in item:
-                    if isinstance(child, LTChar):
+                    if isinstance(child, (LTChar, LTAnon)):
                         child_str += child.get_text()
-                    self.outfp.write('<textline bbox="%s" text="%s">\n' % (bbox2str(item.bbox), enc(child_str)))
+                child_str = ' '.join(child_str.split()).strip()
+                self.outfp.write('<textline bbox="%s" text="%s">\n' % (bbox2str(item.bbox), enc(child_str)))
                 for child in item:
                     render(child)
                 self.outfp.write('</textline>\n')
