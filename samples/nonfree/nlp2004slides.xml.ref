@@ -2,7 +2,7 @@
 <pages>
 <page id="1" bbox="0.000,0.000,800.000,600.000" rotate="0">
 <textbox id="0" bbox="62.000,365.240,734.000,523.160">
-<textline bbox="62.000,437.240,734.000,523.160">
+<textline bbox="62.000,437.240,734.000,523.160" text="&#12467;&#12531;&#12497;&#12521;&#12502;&#12523;&#12394;&#26032;&#32862;&#35352;&#20107;&#12363;&#12425;&#12398;">
 <text font="DAFPJF+HiraKakuPro-W6" bbox="62.000,437.240,110.000,523.160" size="85.920">コ</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="110.000,437.240,158.000,523.160" size="85.920">ン</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="158.000,437.240,206.000,523.160" size="85.920">パ</text>
@@ -20,7 +20,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="62.000,365.240,398.000,451.160">
+<textline bbox="62.000,365.240,398.000,451.160" text="&#22266;&#26377;&#34920;&#29694;&#12398;&#30330;&#35211;">
 <text font="DAFPJF+HiraKakuPro-W6" bbox="62.000,365.240,110.000,451.160" size="85.920">固</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="110.000,365.240,158.000,451.160" size="85.920">有</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="158.000,365.240,206.000,451.160" size="85.920">表</text>
@@ -33,7 +33,7 @@
 </textline>
 </textbox>
 <textbox id="1" bbox="263.532,62.640,732.000,275.120">
-<textline bbox="576.012,210.680,732.000,275.120">
+<textline bbox="576.012,210.680,732.000,275.120" text="&#26032;&#23665; &#31056;&#20171;">
 <text font="DAFPJF+HiraKakuPro-W6" bbox="576.012,210.680,612.012,275.120" size="64.440">新</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="612.012,210.680,648.012,275.120" size="64.440">山</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="648.012,210.680,660.000,275.120" size="64.440"> </text>
@@ -42,7 +42,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="612.012,154.680,732.000,219.120">
+<textline bbox="612.012,154.680,732.000,219.120" text="&#38306;&#26681; &#32865;">
 <text font="DAFPJF+HiraKakuPro-W6" bbox="612.012,154.680,648.012,219.120" size="64.440">関</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="648.012,154.680,684.012,219.120" size="64.440">根</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="684.012,154.680,696.000,219.120" size="64.440"> </text>
@@ -50,7 +50,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="263.532,106.640,732.000,156.760">
+<textline bbox="263.532,106.640,732.000,156.760" text="Computer Science Department">
 <text font="DAFPJF+HiraKakuPro-W6" bbox="263.532,106.640,285.736,156.760" size="50.120">C</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="285.736,106.640,304.496,156.760" size="50.120">o</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="304.496,106.640,332.776,156.760" size="50.120">m</text>
@@ -81,7 +81,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="424.140,62.640,732.000,112.760">
+<textline bbox="424.140,62.640,732.000,112.760" text="New York University">
 <text font="DAFPJF+HiraKakuPro-W6" bbox="424.140,62.640,447.128,112.760" size="50.120">N</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="447.128,62.640,464.964,112.760" size="50.120">e</text>
 <text font="DAFPJF+HiraKakuPro-W6" bbox="464.964,62.640,488.764,112.760" size="50.120">w</text>

@@ -2,7 +2,7 @@
 <pages>
 <page id="1" bbox="0.000,0.000,595.000,842.000" rotate="0">
 <textbox id="0" bbox="79.612,748.066,532.338,766.727">
-<textline bbox="79.612,748.066,532.338,766.727">
+<textline bbox="79.612,748.066,532.338,766.727" text="Preemptive Information Extraction using Unrestricted Relation Discovery">
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="79.612,748.066,88.376,766.727" size="18.662">P</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="88.376,748.066,94.745,766.727" size="18.662">r</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="94.501,748.066,100.870,766.727" size="18.662">e</text>
@@ -79,7 +79,7 @@
 </textline>
 </textbox>
 <textbox id="1" bbox="148.251,712.054,239.682,727.605">
-<textline bbox="148.251,712.054,239.682,727.605">
+<textline bbox="148.251,712.054,239.682,727.605" text="Yusuke Shinyama">
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="148.251,712.054,156.882,727.605" size="15.551">Y</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="155.782,712.054,162.428,727.605" size="15.551">u</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="162.428,712.054,167.078,727.605" size="15.551">s</text>
@@ -100,7 +100,7 @@
 </textline>
 </textbox>
 <textbox id="2" bbox="389.637,712.054,463.700,727.605">
-<textline bbox="389.637,712.054,463.700,727.605">
+<textline bbox="389.637,712.054,463.700,727.605" text="Satoshi Sekine">
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="389.637,712.054,396.283,727.605" size="15.551">S</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="396.283,712.054,402.260,727.605" size="15.551">a</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="402.260,712.054,406.240,727.605" size="15.551">t</text>
@@ -119,8 +119,8 @@
 </text>
 </textline>
 </textbox>
-<textbox id="3" bbox="222.002,648.504,390.025,704.541">
-<textline bbox="255.251,690.138,356.747,704.541">
+<textbox id="3" bbox="255.251,690.138,356.747,704.541">
+<textline bbox="255.251,690.138,356.747,704.541" text="New York University">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="255.251,690.138,263.882,704.541" size="14.404">N</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="263.882,690.138,269.189,704.541" size="14.404">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="268.890,690.138,277.520,704.541" size="14.404">w</text>
@@ -143,7 +143,9 @@
 <text>
 </text>
 </textline>
-<textline bbox="244.848,676.194,367.131,690.598">
+</textbox>
+<textbox id="4" bbox="244.848,676.194,367.131,690.598">
+<textline bbox="244.848,676.194,367.131,690.598" text="715, Broadway, 7th Floor">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="244.848,676.194,250.825,690.598" size="14.404">7</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="250.825,676.194,256.802,690.598" size="14.404">1</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="256.802,676.194,262.778,690.598" size="14.404">5</text>
@@ -171,7 +173,9 @@
 <text>
 </text>
 </textline>
-<textline bbox="252.961,662.240,359.023,676.644">
+</textbox>
+<textbox id="5" bbox="252.961,662.240,359.023,676.644">
+<textline bbox="252.961,662.240,359.023,676.644" text="New York, NY, 10003">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="252.961,662.240,261.591,676.644" size="14.404">N</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="261.591,662.240,266.898,676.644" size="14.404">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="266.611,662.240,275.242,676.644" size="14.404">w</text>
@@ -194,7 +198,9 @@
 <text>
 </text>
 </textline>
-<textline bbox="222.002,648.504,390.025,667.438">
+</textbox>
+<textbox id="6" bbox="222.002,648.504,390.025,667.438">
+<textline bbox="222.002,648.504,390.025,667.438" text="{yusuke,sekine}@cs.nyu.edu">
 <text font="ZNQAHA+CMSY10" bbox="222.002,648.504,227.459,667.438" size="18.934">{</text>
 <text font="CXOZYQ+NimbusMonL-Regu" bbox="227.454,648.504,234.001,659.941" size="11.437">y</text>
 <text font="CXOZYQ+NimbusMonL-Regu" bbox="234.001,648.504,240.549,659.941" size="11.437">u</text>
@@ -225,8 +231,8 @@
 </text>
 </textline>
 </textbox>
-<textbox id="4" bbox="163.156,594.471,207.634,610.022">
-<textline bbox="163.156,594.471,207.634,610.022">
+<textbox id="7" bbox="163.156,594.471,207.634,610.022">
+<textline bbox="163.156,594.471,207.634,610.022" text="Abstract">
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="163.156,594.471,171.786,610.022" size="15.551">A</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="171.786,594.471,178.432,610.022" size="15.551">b</text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="178.432,594.471,183.082,610.022" size="15.551">s</text>
@@ -239,8 +245,8 @@
 </text>
 </textline>
 </textbox>
-<textbox id="5" bbox="93.816,405.636,277.046,581.372">
-<textline bbox="93.816,568.222,277.046,581.372">
+<textbox id="8" bbox="93.816,405.636,277.046,581.372">
+<textline bbox="93.816,568.222,277.046,581.372" text="We are trying to extend the boundary of">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,568.222,104.118,581.372" size="13.150">W</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="103.256,568.222,108.101,581.372" size="13.150">e</text>
 <text> </text>
@@ -283,7 +289,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,554.678,277.046,567.828">
+<textline bbox="93.816,554.678,277.046,567.828" text="Information Extraction (IE) systems. Ex-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,554.678,97.450,567.828" size="13.150">I</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="97.450,554.678,102.907,567.828" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="102.907,554.678,106.541,567.828" size="13.150">f</text>
@@ -327,7 +333,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,541.124,277.046,554.274">
+<textline bbox="93.816,541.124,277.046,554.274" text="isting IE systems require a lot of time and">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,541.124,96.850,554.274" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="96.850,541.124,101.095,554.274" size="13.150">s</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="101.095,541.124,104.129,554.274" size="13.150">t</text>
@@ -374,7 +380,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,527.580,277.046,540.730">
+<textline bbox="93.816,527.580,277.046,540.730" text="human effort to tune for a new scenario.">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,527.580,99.273,540.730" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="99.273,527.580,104.729,540.730" size="13.150">u</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="104.729,527.580,113.220,540.730" size="13.150">m</text>
@@ -418,7 +424,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,514.026,277.046,527.177">
+<textline bbox="93.816,514.026,277.046,527.177" text="Preemptive Information Extraction is an">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,514.026,99.884,527.177" size="13.150">P</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="99.884,514.026,103.518,527.177" size="13.150">r</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="103.518,514.026,108.363,527.177" size="13.150">e</text>
@@ -461,7 +467,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,500.483,277.046,513.633">
+<textline bbox="93.816,500.483,277.046,513.633" text="attempt to automatically create all feasible">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,500.483,98.662,513.633" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="98.662,500.483,101.695,513.633" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="101.695,500.483,104.729,513.633" size="13.150">t</text>
@@ -509,7 +515,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,486.929,277.046,500.079">
+<textline bbox="93.816,486.929,277.046,500.079" text="IE systems in advance without human in-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,486.929,97.450,500.079" size="13.150">I</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="97.450,486.929,104.118,500.079" size="13.150">E</text>
 <text> </text>
@@ -552,7 +558,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,473.385,277.046,486.535">
+<textline bbox="93.816,473.385,277.046,486.535" text="tervention. We propose a technique called">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,473.385,96.850,486.535" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="96.850,473.385,101.695,486.535" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="101.695,473.385,105.329,486.535" size="13.150">r</text>
@@ -597,7 +603,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,459.831,277.046,472.981">
+<textline bbox="93.816,459.831,277.046,472.981" text="Unrestricted Relation Discovery that dis-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,459.831,101.695,472.981" size="13.150">U</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="101.695,459.831,107.152,472.981" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="107.152,459.831,110.786,472.981" size="13.150">r</text>
@@ -642,7 +648,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,446.277,277.046,459.428">
+<textline bbox="93.816,446.277,277.046,459.428" text="covers all possible relations from texts and">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,446.277,98.662,459.428" size="13.150">c</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="98.662,446.277,104.118,459.428" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="103.965,446.277,109.422,459.428" size="13.150">v</text>
@@ -690,7 +696,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,432.734,277.046,445.884">
+<textline bbox="93.816,432.734,277.046,445.884" text="presents them as tables. We present a pre-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,432.734,99.273,445.884" size="13.150">p</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="99.273,432.734,102.907,445.884" size="13.150">r</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="102.907,432.734,107.752,445.884" size="13.150">e</text>
@@ -736,7 +742,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,419.180,277.046,432.330">
+<textline bbox="93.816,419.180,277.046,432.330" text="liminary system that obtains reasonably">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,419.180,96.850,432.330" size="13.150">l</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="96.850,419.180,99.884,432.330" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="99.884,419.180,108.374,432.330" size="13.150">m</text>
@@ -779,7 +785,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="93.816,405.636,149.593,418.786">
+<textline bbox="93.816,405.636,149.593,418.786" text="good results.">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="93.816,405.636,99.273,418.786" size="13.150">g</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="99.273,405.636,104.729,418.786" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="104.729,405.636,110.186,418.786" size="13.150">o</text>
@@ -797,8 +803,8 @@
 </text>
 </textline>
 </textbox>
-<textbox id="6" bbox="72.000,370.948,152.829,386.500">
-<textline bbox="72.000,370.948,152.829,386.500">
+<textbox id="9" bbox="72.000,370.948,152.829,386.500">
+<textline bbox="72.000,370.948,152.829,386.500" text="1 Background">
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="72.000,370.948,77.977,386.500" size="15.551">1</text>
 <text> </text>
 <text font="MZSZGI+NimbusRomNo9L-Medi" bbox="89.930,370.948,97.903,386.500" size="15.551">B</text>
@@ -815,8 +821,8 @@
 </text>
 </textline>
 </textbox>
-<textbox id="7" bbox="72.000,119.636,298.893,363.121">
-<textline bbox="72.000,349.970,298.882,363.121">
+<textbox id="10" bbox="72.000,119.636,298.893,363.121">
+<textline bbox="72.000,349.970,298.882,363.121" text="Every day, a large number of news articles are cre-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,349.970,78.668,363.121" size="13.150">E</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="78.668,349.970,84.124,363.121" size="13.150">v</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="83.972,349.970,88.817,363.121" size="13.150">e</text>
@@ -871,7 +877,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,336.427,298.882,349.577">
+<textline bbox="72.000,336.427,298.882,349.577" text="ated and reported, many of which are unique. But">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,336.427,76.845,349.577" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="76.845,336.427,79.879,349.577" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="79.879,336.427,84.725,349.577" size="13.150">e</text>
@@ -923,7 +929,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,322.873,298.893,336.023">
+<textline bbox="72.000,322.873,298.893,336.023" text="certain types of events, such as hurricanes or mur-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,322.873,76.845,336.023" size="13.150">c</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="76.845,322.873,81.691,336.023" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="81.691,322.873,85.325,336.023" size="13.150">r</text>
@@ -978,7 +984,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,309.329,298.893,322.479">
+<textline bbox="72.000,309.329,298.893,322.479" text="ders, are reported again and again throughout a year.">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,309.329,77.457,322.479" size="13.150">d</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="77.457,309.329,82.302,322.479" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.302,309.329,85.936,322.479" size="13.150">r</text>
@@ -1035,7 +1041,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,295.775,298.882,308.926">
+<textline bbox="72.000,295.775,298.882,308.926" text="The goal of Information Extraction, or IE, is to re-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,295.775,78.668,308.926" size="13.150">T</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="78.668,295.775,84.124,308.926" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="84.124,295.775,88.970,308.926" size="13.150">e</text>
@@ -1091,7 +1097,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,282.222,298.882,295.372">
+<textline bbox="72.000,282.222,298.882,295.372" text="trieve a certain type of news event from past articles">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,282.222,75.034,295.372" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="75.034,282.222,78.668,295.372" size="13.150">r</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="78.668,282.222,81.702,295.372" size="13.150">i</text>
@@ -1149,7 +1155,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,268.678,298.882,281.828">
+<textline bbox="72.000,268.678,298.882,281.828" text="and present the events as a table whose columns are">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,268.678,76.845,281.828" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="76.845,268.678,82.302,281.828" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.302,268.678,87.758,281.828" size="13.150">d</text>
@@ -1204,7 +1210,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,255.124,298.882,268.274">
+<textline bbox="72.000,255.124,298.882,268.274" text="&#64257;lled with a name of a person or company, accord-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,255.124,78.068,268.274" size="13.150">ﬁ</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="78.068,255.124,81.101,268.274" size="13.150">l</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="81.101,255.124,84.135,268.274" size="13.150">l</text>
@@ -1257,7 +1263,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,241.580,298.882,254.730">
+<textline bbox="72.000,241.580,298.882,254.730" text="ing to its role in the event. However, existing IE">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,241.580,75.034,254.730" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="75.034,241.580,80.490,254.730" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="80.490,241.580,85.947,254.730" size="13.150">g</text>
@@ -1311,7 +1317,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,228.026,298.882,241.177">
+<textline bbox="72.000,228.026,298.882,241.177" text="techniques require a lot of human labor. First, you">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,228.026,75.034,241.177" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="75.034,228.026,79.879,241.177" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="79.879,228.026,84.725,241.177" size="13.150">c</text>
@@ -1366,7 +1372,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,214.483,298.882,227.633">
+<textline bbox="72.000,214.483,298.882,227.633" text="have to specify the type of information you want and">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,214.483,77.457,227.633" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="77.457,214.483,82.302,227.633" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.095,214.483,87.551,227.633" size="13.150">v</text>
@@ -1422,7 +1428,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,200.929,298.882,214.079">
+<textline bbox="72.000,200.929,298.882,214.079" text="collect articles that include this information. Then,">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,200.929,76.845,214.079" size="13.150">c</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="76.845,200.929,82.302,214.079" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.302,200.929,85.336,214.079" size="13.150">l</text>
@@ -1479,7 +1485,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,187.385,298.882,200.535">
+<textline bbox="72.000,187.385,298.882,200.535" text="you have to analyze the articles and manually craft">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,187.385,77.457,200.535" size="13.150">y</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="77.457,187.385,82.913,200.535" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.913,187.385,88.370,200.535" size="13.150">u</text>
@@ -1534,7 +1540,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,173.831,298.893,186.981">
+<textline bbox="72.000,173.831,298.893,186.981" text="a set of patterns to capture these events. Most exist-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,173.831,76.845,186.981" size="13.150">a</text>
 <text> </text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="79.694,173.831,83.939,186.981" size="13.150">s</text>
@@ -1592,7 +1598,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,160.287,298.882,173.438">
+<textline bbox="72.000,160.287,298.882,173.438" text="ing IE research focuses on reducing this burden by">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,160.287,75.034,173.438" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="75.034,160.287,80.490,173.438" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="80.490,160.287,85.947,173.438" size="13.150">g</text>
@@ -1646,7 +1652,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,146.734,298.882,159.884">
+<textline bbox="72.000,146.734,298.882,159.884" text="helping people create such patterns. But each time">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,146.734,77.457,159.884" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="77.457,146.734,82.302,159.884" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.302,146.734,85.336,159.884" size="13.150">l</text>
@@ -1700,7 +1706,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,133.190,298.882,146.340">
+<textline bbox="72.000,133.190,298.882,146.340" text="you want to extract a different kind of information,">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,133.190,77.457,146.340" size="13.150">y</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="77.457,133.190,82.913,146.340" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.913,133.190,88.370,146.340" size="13.150">u</text>
@@ -1756,7 +1762,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="72.000,119.636,298.882,132.786">
+<textline bbox="72.000,119.636,298.882,132.786" text="you need to repeat the whole process: specify arti-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="72.000,119.636,77.457,132.786" size="13.150">y</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="77.457,119.636,82.913,132.786" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="82.913,119.636,88.370,132.786" size="13.150">u</text>
@@ -1812,8 +1818,8 @@
 </text>
 </textline>
 </textbox>
-<textbox id="8" bbox="313.198,119.636,540.091,607.829">
-<textline bbox="313.198,594.679,540.080,607.829">
+<textbox id="11" bbox="313.198,513.386,540.091,607.829">
+<textline bbox="313.198,594.679,540.080,607.829" text="cles and adjust its patterns, either manually or semi-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,594.679,318.043,607.829" size="13.150">c</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,594.679,321.077,607.829" size="13.150">l</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.077,594.679,325.922,607.829" size="13.150">e</text>
@@ -1871,7 +1877,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,581.125,540.091,594.275">
+<textline bbox="313.198,581.125,540.091,594.275" text="automatically. There is a bit of a dangerous pitfall">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,581.125,318.043,594.275" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,581.125,323.499,594.275" size="13.150">u</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,581.125,326.533,594.275" size="13.150">t</text>
@@ -1927,7 +1933,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,567.581,540.080,580.732">
+<textline bbox="313.198,567.581,540.080,580.732" text="here. First, it is hard to estimate how good the sys-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,567.581,318.654,580.732" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.654,567.581,323.499,580.732" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,567.581,327.133,580.732" size="13.150">r</text>
@@ -1984,7 +1990,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,554.028,540.080,567.178">
+<textline bbox="313.198,554.028,540.080,567.178" text="tem can be after months of work. Furthermore, you">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,554.028,316.231,567.178" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,554.028,321.077,567.178" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.077,554.028,329.567,567.178" size="13.150">m</text>
@@ -2037,7 +2043,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,540.484,540.080,553.634">
+<textline bbox="313.198,540.484,540.080,553.634" text="might not know if the task is even doable in the &#64257;rst">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,540.484,321.688,553.634" size="13.150">m</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,540.484,324.722,553.634" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="324.722,540.484,330.178,553.634" size="13.150">g</text>
@@ -2094,7 +2100,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,526.930,540.080,540.080">
+<textline bbox="313.198,526.930,540.080,540.080" text="place. Knowing what kind of information is easily">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,526.930,318.654,540.080" size="13.150">p</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.654,526.930,321.688,540.080" size="13.150">l</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,526.930,326.533,540.080" size="13.150">a</text>
@@ -2147,7 +2153,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,513.386,523.765,526.536">
+<textline bbox="313.198,513.386,523.765,526.536" text="obtained in advance would help reduce this risk.">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,513.386,318.654,526.536" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.654,513.386,324.111,526.536" size="13.150">b</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="324.111,513.386,327.144,526.536" size="13.150">t</text>
@@ -2199,7 +2205,9 @@
 <text>
 </text>
 </textline>
-<textline bbox="324.111,499.422,540.080,512.573">
+</textbox>
+<textbox id="12" bbox="313.198,336.837,540.091,512.573">
+<textline bbox="324.111,499.422,540.080,512.573" text="An IE task can be de&#64257;ned as &#64257;nding a relation">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="324.111,499.422,331.990,512.573" size="13.150">A</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="331.990,499.422,337.446,512.573" size="13.150">n</text>
 <text> </text>
@@ -2248,7 +2256,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,485.879,540.080,499.029">
+<textline bbox="313.198,485.879,540.080,499.029" text="among several entities involved in a certain type of">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,485.879,318.043,499.029" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,485.879,326.533,499.029" size="13.150">m</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="326.533,485.879,331.990,499.029" size="13.150">o</text>
@@ -2304,7 +2312,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,472.325,540.080,485.475">
+<textline bbox="313.198,472.325,540.080,485.475" text="event. For example, in the MUC-6 management">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,472.325,318.043,485.475" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="317.781,472.325,323.238,485.475" size="13.150">v</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.074,472.325,327.919,485.475" size="13.150">e</text>
@@ -2351,7 +2359,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,458.781,540.080,471.931">
+<textline bbox="313.198,458.781,540.080,471.931" text="succession scenario, one seeks a relation between">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,458.781,317.443,471.931" size="13.150">s</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="317.443,458.781,322.899,471.931" size="13.150">u</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="322.899,458.781,327.745,471.931" size="13.150">c</text>
@@ -2404,7 +2412,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,445.227,540.091,458.377">
+<textline bbox="313.198,445.227,540.091,458.377" text="COMPANY, PERSON and POST involved with hir-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,445.227,320.477,458.377" size="13.150">C</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="320.477,445.227,328.356,458.377" size="13.150">O</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="328.356,445.227,338.057,458.377" size="13.150">M</text>
@@ -2451,7 +2459,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,431.673,540.080,444.824">
+<textline bbox="313.198,431.673,540.080,444.824" text="ing/&#64257;ring events. For each row of an extracted ta-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,431.673,316.231,444.824" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,431.673,321.688,444.824" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,431.673,327.144,444.824" size="13.150">g</text>
@@ -2505,7 +2513,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,418.130,540.080,431.280">
+<textline bbox="313.198,418.130,540.080,431.280" text="ble, you can always read it as &#8220;COMPANY hired">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,418.130,318.654,431.280" size="13.150">b</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.654,418.130,321.688,431.280" size="13.150">l</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,418.130,326.533,431.280" size="13.150">e</text>
@@ -2554,7 +2562,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,404.576,540.080,417.726">
+<textline bbox="313.198,404.576,540.080,417.726" text="(or &#64257;red) PERSON for POST.&#8221; The relation between">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,404.576,316.832,417.726" size="13.150">(</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.832,404.576,322.288,417.726" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="322.288,404.576,325.922,417.726" size="13.150">r</text>
@@ -2606,7 +2614,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,391.032,540.080,404.182">
+<textline bbox="313.198,391.032,540.080,404.182" text="these entities is retained throughout the table. There">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,391.032,316.231,404.182" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,391.032,321.688,404.182" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,391.032,326.533,404.182" size="13.150">e</text>
@@ -2664,7 +2672,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,377.478,540.080,390.628">
+<textline bbox="313.198,377.478,540.080,390.628" text="are many existing works on obtaining extraction pat-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,377.478,318.043,390.628" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,377.478,321.677,390.628" size="13.150">r</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.677,377.478,326.522,390.628" size="13.150">e</text>
@@ -2720,7 +2728,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,363.934,540.091,377.085">
+<textline bbox="313.198,363.934,540.091,377.085" text="terns for pre-de&#64257;ned relations (Riloff, 1996; Yangar-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,363.934,316.231,377.085" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,363.934,321.077,377.085" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.077,363.934,324.711,377.085" size="13.150">r</text>
@@ -2777,7 +2785,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,350.381,540.080,363.531">
+<textline bbox="313.198,350.381,540.080,363.531" text="ber et al., 2000; Agichtein and Gravano, 2000; Sudo">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,350.381,318.654,363.531" size="13.150">b</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.654,350.381,323.499,363.531" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,350.381,327.133,363.531" size="13.150">r</text>
@@ -2832,7 +2840,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,336.837,368.057,349.987">
+<textline bbox="313.198,336.837,368.057,349.987" text="et al., 2003).">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,336.837,318.043,349.987" size="13.150">e</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,336.837,321.077,349.987" size="13.150">t</text>
 <text> </text>
@@ -2850,7 +2858,9 @@
 <text>
 </text>
 </textline>
-<textline bbox="324.111,322.873,540.080,336.023">
+</textbox>
+<textbox id="13" bbox="313.198,119.636,540.091,336.023">
+<textline bbox="324.111,322.873,540.080,336.023" text="Unrestricted Relation Discovery is a technique to">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="324.111,322.873,331.990,336.023" size="13.150">U</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="331.990,322.873,337.446,336.023" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="337.446,322.873,341.080,336.023" size="13.150">r</text>
@@ -2903,7 +2913,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,309.329,540.080,322.479">
+<textline bbox="313.198,309.329,540.080,322.479" text="automatically discover such relations that repeatedly">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,309.329,318.043,322.479" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,309.329,323.499,322.479" size="13.150">u</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,309.329,326.533,322.479" size="13.150">t</text>
@@ -2960,7 +2970,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,295.775,540.080,308.926">
+<textline bbox="313.198,295.775,540.080,308.926" text="appear in a corpus and present them as a table, with">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,295.775,318.043,308.926" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,295.775,323.499,308.926" size="13.150">p</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,295.775,328.956,308.926" size="13.150">p</text>
@@ -3016,7 +3026,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,282.222,540.091,295.372">
+<textline bbox="313.198,282.222,540.091,295.372" text="absolutely no human intervention. Unlike most ex-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,282.222,318.043,295.372" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,282.222,323.499,295.372" size="13.150">b</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,282.222,327.745,295.372" size="13.150">s</text>
@@ -3069,7 +3079,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,268.678,540.080,281.828">
+<textline bbox="313.198,268.678,540.080,281.828" text="isting IE research, a user does not specify the type">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,268.678,316.231,281.828" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,268.678,320.477,281.828" size="13.150">s</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="320.477,268.678,323.510,281.828" size="13.150">t</text>
@@ -3125,7 +3135,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,255.124,540.080,268.274">
+<textline bbox="313.198,255.124,540.080,268.274" text="of articles or information wanted. Instead, a system">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,255.124,318.654,268.274" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.654,255.124,322.288,268.274" size="13.150">f</text>
 <text> </text>
@@ -3181,7 +3191,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,241.580,540.080,254.730">
+<textline bbox="313.198,241.580,540.080,254.730" text="tries to &#64257;nd all the kinds of relations that are reported">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,241.580,316.231,254.730" size="13.150">t</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,241.580,319.865,254.730" size="13.150">r</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="319.865,241.580,322.899,254.730" size="13.150">i</text>
@@ -3242,7 +3252,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,228.026,540.080,241.177">
+<textline bbox="313.198,228.026,540.080,241.177" text="multiple times and can be reported in tabular form.">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,228.026,321.688,241.177" size="13.150">m</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,228.026,327.144,241.177" size="13.150">u</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="327.144,228.026,330.178,241.177" size="13.150">l</text>
@@ -3297,7 +3307,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,214.483,540.080,227.633">
+<textline bbox="313.198,214.483,540.080,227.633" text="This technique will open up the possibility of try-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,214.483,319.865,227.633" size="13.150">T</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="319.865,214.483,325.322,227.633" size="13.150">h</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="325.322,214.483,328.356,227.633" size="13.150">i</text>
@@ -3352,7 +3362,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,200.929,540.080,214.079">
+<textline bbox="313.198,200.929,540.080,214.079" text="ing new IE scenarios. Furthermore, the system itself">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,200.929,316.231,214.079" size="13.150">i</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,200.929,321.688,214.079" size="13.150">n</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.688,200.929,327.144,214.079" size="13.150">g</text>
@@ -3408,7 +3418,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,187.385,540.080,200.535">
+<textline bbox="313.198,187.385,540.080,200.535" text="can be used as an IE system, since an obtained re-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,187.385,318.043,200.535" size="13.150">c</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,187.385,322.888,200.535" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="322.888,187.385,328.345,200.535" size="13.150">n</text>
@@ -3462,7 +3472,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,173.831,540.080,186.981">
+<textline bbox="313.198,173.831,540.080,186.981" text="lation is already presented as a table. If this system">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,173.831,316.231,186.981" size="13.150">l</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.231,173.831,321.077,186.981" size="13.150">a</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="321.077,173.831,324.111,186.981" size="13.150">t</text>
@@ -3520,7 +3530,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,160.287,540.080,173.438">
+<textline bbox="313.198,160.287,540.080,173.438" text="works to a certain extent, tuning an IE system be-">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,160.287,321.077,173.438" size="13.150">w</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="320.979,160.287,326.435,173.438" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="326.435,160.287,330.069,173.438" size="13.150">r</text>
@@ -3574,7 +3584,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,146.734,540.080,159.884">
+<textline bbox="313.198,146.734,540.080,159.884" text="comes a search problem: all the tables are already">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,146.734,318.043,159.884" size="13.150">c</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.043,146.734,323.499,159.884" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.499,146.734,331.990,159.884" size="13.150">m</text>
@@ -3628,7 +3638,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,133.190,540.080,146.340">
+<textline bbox="313.198,133.190,540.080,146.340" text="built &#8220;preemptively.&#8221; A user only needs to search">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,133.190,318.654,146.340" size="13.150">b</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="318.447,133.190,323.903,146.340" size="13.150">u</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="323.903,133.190,326.937,146.340" size="13.150">i</text>
@@ -3681,7 +3691,7 @@
 <text>
 </text>
 </textline>
-<textline bbox="313.198,119.636,397.501,132.786">
+<textline bbox="313.198,119.636,397.501,132.786" text="for a relevant table.">
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="313.198,119.636,316.832,132.786" size="13.150">f</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="316.832,119.636,322.288,132.786" size="13.150">o</text>
 <text font="QTLIUY+NimbusRomNo9L-Regu" bbox="322.288,119.636,325.922,132.786" size="13.150">r</text>
@@ -3710,27 +3720,42 @@
 <layout>
 <textgroup bbox="72.000,119.636,540.091,766.727">
 <textgroup bbox="79.612,648.504,532.338,766.727">
+<textgroup bbox="79.612,712.054,532.338,766.727">
 <textbox id="0" bbox="79.612,748.066,532.338,766.727" />
-<textgroup bbox="148.251,648.504,463.700,727.605">
 <textgroup bbox="148.251,712.054,463.700,727.605">
 <textbox id="1" bbox="148.251,712.054,239.682,727.605" />
 <textbox id="2" bbox="389.637,712.054,463.700,727.605" />
 </textgroup>
-<textbox id="3" bbox="222.002,648.504,390.025,704.541" />
+</textgroup>
+<textgroup bbox="222.002,648.504,390.025,704.541">
+<textgroup bbox="244.848,676.194,367.131,704.541">
+<textbox id="3" bbox="255.251,690.138,356.747,704.541" />
+<textbox id="4" bbox="244.848,676.194,367.131,690.598" />
+</textgroup>
+<textgroup bbox="222.002,648.504,390.025,676.644">
+<textbox id="5" bbox="252.961,662.240,359.023,676.644" />
+<textbox id="6" bbox="222.002,648.504,390.025,667.438" />
+</textgroup>
 </textgroup>
 </textgroup>
 <textgroup bbox="72.000,119.636,540.091,610.022">
 <textgroup bbox="72.000,119.636,298.893,610.022">
 <textgroup bbox="93.816,405.636,277.046,610.022">
-<textbox id="4" bbox="163.156,594.471,207.634,610.022" />
-<textbox id="5" bbox="93.816,405.636,277.046,581.372" />
+<textbox id="7" bbox="163.156,594.471,207.634,610.022" />
+<textbox id="8" bbox="93.816,405.636,277.046,581.372" />
 </textgroup>
 <textgroup bbox="72.000,119.636,298.893,386.500">
-<textbox id="6" bbox="72.000,370.948,152.829,386.500" />
-<textbox id="7" bbox="72.000,119.636,298.893,363.121" />
+<textbox id="9" bbox="72.000,370.948,152.829,386.500" />
+<textbox id="10" bbox="72.000,119.636,298.893,363.121" />
 </textgroup>
 </textgroup>
-<textbox id="8" bbox="313.198,119.636,540.091,607.829" />
+<textgroup bbox="313.198,119.636,540.091,607.829">
+<textgroup bbox="313.198,336.837,540.091,607.829">
+<textbox id="11" bbox="313.198,513.386,540.091,607.829" />
+<textbox id="12" bbox="313.198,336.837,540.091,512.573" />
+</textgroup>
+<textbox id="13" bbox="313.198,119.636,540.091,336.023" />
+</textgroup>
 </textgroup>
 </textgroup>
 </layout>

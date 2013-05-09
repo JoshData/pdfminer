@@ -2,7 +2,7 @@
 <pages>
 <page id="1" bbox="0.000,0.000,612.000,792.000" rotate="0">
 <textbox id="0" bbox="100.000,695.032,161.344,722.776">
-<textline bbox="100.000,695.032,161.344,722.776">
+<textline bbox="100.000,695.032,161.344,722.776" text="Hello">
 <text font="Helvetica" bbox="100.000,695.032,117.328,722.776" size="27.744">H</text>
 <text font="Helvetica" bbox="117.328,695.032,130.672,722.776" size="27.744">e</text>
 <text font="Helvetica" bbox="130.672,695.032,136.000,722.776" size="27.744">l</text>
@@ -14,7 +14,7 @@
 </textline>
 </textbox>
 <textbox id="1" bbox="261.328,695.032,323.992,722.776">
-<textline bbox="261.328,695.032,323.992,722.776">
+<textline bbox="261.328,695.032,323.992,722.776" text="World">
 <text font="Helvetica" bbox="261.328,695.032,283.984,722.776" size="27.744">W</text>
 <text font="Helvetica" bbox="283.984,695.032,297.328,722.776" size="27.744">o</text>
 <text font="Helvetica" bbox="297.328,695.032,305.320,722.776" size="27.744">r</text>
@@ -25,7 +25,7 @@
 </textline>
 </textbox>
 <textbox id="2" bbox="100.000,595.032,161.344,622.776">
-<textline bbox="100.000,595.032,161.344,622.776">
+<textline bbox="100.000,595.032,161.344,622.776" text="Hello">
 <text font="Helvetica" bbox="100.000,595.032,117.328,622.776" size="27.744">H</text>
 <text font="Helvetica" bbox="117.328,595.032,130.672,622.776" size="27.744">e</text>
 <text font="Helvetica" bbox="130.672,595.032,136.000,622.776" size="27.744">l</text>
@@ -37,7 +37,7 @@
 </textline>
 </textbox>
 <textbox id="3" bbox="261.344,595.032,324.008,622.776">
-<textline bbox="261.344,595.032,324.008,622.776">
+<textline bbox="261.344,595.032,324.008,622.776" text="World">
 <text font="Helvetica" bbox="261.344,595.032,284.000,622.776" size="27.744">W</text>
 <text font="Helvetica" bbox="284.000,595.032,297.344,622.776" size="27.744">o</text>
 <text font="Helvetica" bbox="297.344,595.032,305.336,622.776" size="27.744">r</text>
@@ -48,7 +48,7 @@
 </textline>
 </textbox>
 <textbox id="4" bbox="100.000,495.032,211.344,522.776">
-<textline bbox="100.000,495.032,211.344,522.776">
+<textline bbox="100.000,495.032,211.344,522.776" text="H e l l o">
 <text font="Helvetica" bbox="100.000,495.032,117.328,522.776" size="27.744">H</text>
 <text> </text>
 <text font="Helvetica" bbox="127.328,495.032,140.672,522.776" size="27.744">e</text>
@@ -65,7 +65,7 @@
 </textline>
 </textbox>
 <textbox id="5" bbox="321.344,495.032,424.008,522.776">
-<textline bbox="321.344,495.032,424.008,522.776">
+<textline bbox="321.344,495.032,424.008,522.776" text="W o r l d">
 <text font="Helvetica" bbox="321.344,495.032,344.000,522.776" size="27.744">W</text>
 <text> </text>
 <text font="Helvetica" bbox="354.000,495.032,367.344,522.776" size="27.744">o</text>
@@ -80,7 +80,7 @@
 </textline>
 </textbox>
 <textbox id="6" bbox="100.000,395.032,211.264,422.776">
-<textline bbox="100.000,395.032,211.264,422.776">
+<textline bbox="100.000,395.032,211.264,422.776" text="H e l l o">
 <text font="Helvetica" bbox="100.000,395.032,117.328,422.776" size="27.744">H</text>
 <text> </text>
 <text font="Helvetica" bbox="127.312,395.032,140.656,422.776" size="27.744">e</text>
@@ -97,7 +97,7 @@
 </textline>
 </textbox>
 <textbox id="7" bbox="321.232,395.032,423.832,422.776">
-<textline bbox="321.232,395.032,423.832,422.776">
+<textline bbox="321.232,395.032,423.832,422.776" text="W o r l d">
 <text font="Helvetica" bbox="321.232,395.032,343.888,422.776" size="27.744">W</text>
 <text> </text>
 <text font="Helvetica" bbox="353.872,395.032,367.216,422.776" size="27.744">o</text>

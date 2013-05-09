@@ -10,6 +10,7 @@ from tools import conv_cmap
 
 
 cmapdir = 'pdfminer/cmap'
+samplesdir = 'samples'
 
 
 class CustomBuild(build):
@@ -31,6 +32,11 @@ class CustomClean(clean):
     def run(self):
         # Remove cmap directory in source directory (not build directory)
         shutil.rmtree(cmapdir, ignore_errors=True)
+        # Remove files produced when running unit tests
+        for root, dirs, files in os.walk(samplesdir):
+            for fn in files:
+                if fn.endswith('.txt') or fn.endswith('.xml') or fn.endswith('.html'):
+                    os.remove(os.path.join(root, fn))
         clean.run(self)  # Continue with regular clean
 
 setup(
