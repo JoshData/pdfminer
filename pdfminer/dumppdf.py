@@ -38,6 +38,7 @@ def e(s):
 def dumpxml(out, obj, codec=None):
     if obj is None:
         out.write('<null />')
+        return
     
     if isinstance(obj, dict):
         out.write('<dict size="%d">\n' % len(obj))
@@ -47,6 +48,7 @@ def dumpxml(out, obj, codec=None):
             dumpxml(out, v)
             out.write('</value>\n')
         out.write('</dict>')
+        return
 
     if isinstance(obj, list):
         out.write('<list size="%d">\n' % len(obj))
@@ -54,9 +56,11 @@ def dumpxml(out, obj, codec=None):
             dumpxml(out, v)
             out.write('\n')
         out.write('</list>')
+        return
 
     if isinstance(obj, str):
         out.write('<string size="%d">%s</string>' % (len(obj), e(obj)))
+        return
 
     if isinstance(obj, PDFStream):
         if codec == 'raw':
@@ -71,18 +75,23 @@ def dumpxml(out, obj, codec=None):
                 data = obj.get_data()
                 out.write('<data size="%d">%s</data>\n' % (len(data), e(data)))
             out.write('</stream>')
+        return
 
     if isinstance(obj, PDFObjRef):
         out.write('<ref id="%d" />' % obj.objid)
+        return
 
     if isinstance(obj, PSKeyword):
         out.write('<keyword>%s</keyword>' % obj.name)
+        return
 
     if isinstance(obj, PSLiteral):
         out.write('<literal>%s</literal>' % obj.name)
+        return
 
     if isinstance(obj, int) or isinstance(obj, float):
         out.write('<number>%s</number>' % obj)
+        return
 
     raise TypeError(obj)
 
