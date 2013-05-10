@@ -12,6 +12,7 @@ More information is available on the Adobe website:
 
 import cPickle as pickle
 import gzip
+import logging
 import os
 import struct
 import sys
@@ -24,13 +25,14 @@ from psparser import PSSyntaxError, PSEOF
 from utils import choplist, nunpack
 
 
+log = logging.getLogger('pdfminer.cmapdb')
+
+
 class CMapError(Exception):
     pass
 
 
 class CMap(object):
-
-    debug = 0
 
     def __init__(self, code2cid=None):
         self.code2cid = code2cid or {}
@@ -52,8 +54,7 @@ class CMap(object):
         copy(self.code2cid, cmap.code2cid)
 
     def decode(self, code):
-        if self.debug:
-            print >>sys.stderr, 'decode: %r, %r' % (self, code)
+        log.debug('decode: %r, %r', self, code)
         d = self.code2cid
         for c in code:
             c = ord(c)
@@ -95,14 +96,11 @@ class IdentityCMap(object):
 
 class UnicodeMap(object):
 
-    debug = 0
-
     def __init__(self, cid2unichr=None):
         self.cid2unichr = cid2unichr or {}
 
     def get_unichr(self, cid):
-        if self.debug:
-            print >>sys.stderr, 'get_unichr: %r, %r' % (self, cid)
+        log.debug('get_unichr: %r, %r', self, cid)
         return self.cid2unichr[cid]
 
     def dump(self, out=sys.stdout):
@@ -196,7 +194,6 @@ class PyUnicodeMap(UnicodeMap):
 
 class CMapDB(object):
 
-    debug = 0
     _cmap_cache = {}
     _umap_cache = {}
     
@@ -206,8 +203,7 @@ class CMapDB(object):
     @classmethod
     def _load_data(cls, name):
         filename = '%s.pickle.gz' % name
-        if cls.debug:
-            print >>sys.stderr, 'loading:', name
+        log.debug('loading: %s', name)
         cmap_paths = (
             os.environ.get('CMAP_PATH', '/usr/share/pdfminer/'),
             os.path.join(os.path.dirname(__file__), 'cmap'),

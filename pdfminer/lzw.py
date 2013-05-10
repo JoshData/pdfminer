@@ -1,9 +1,13 @@
 #!/usr/bin/env python2
-import sys
+
+import logging
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
+
+
+log = logging.getLogger('pdfminer.lzw')
 
 
 class CorruptDataError(Exception):
@@ -11,8 +15,6 @@ class CorruptDataError(Exception):
 
 
 class LZWDecoder(object):
-
-    debug = 0
 
     def __init__(self, fp):
         self.fp = fp
@@ -91,8 +93,7 @@ class LZWDecoder(object):
                 # just ignore corrupt data and stop yielding there
                 break
             yield x
-            if self.debug:
-                print >>sys.stderr, ('nbits=%d, code=%d, output=%r, table=%r' % (self.nbits, code, x, self.table[258:]))
+            log.debug('nbits=%d, code=%d, output=%r, table=%r', self.nbits, code, x, self.table[258:])
 
 
 def lzwdecode(data):

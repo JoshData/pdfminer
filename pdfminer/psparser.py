@@ -1,11 +1,12 @@
 #!/usr/bin/env python2
 
+import logging
 import re
-import sys
 
 from utils import choplist
 
 
+log = logging.getLogger('pdfminer.psparser')
 STRICT = 0
 
 
@@ -138,8 +139,6 @@ class PSBaseParser(object):
     """Most basic PostScript parser that performs only tokenization."""
     BUFSIZ = 4096
 
-    debug = 0
-
     def __init__(self, fp):
         self.fp = fp
         self.seek(0)
@@ -161,13 +160,12 @@ class PSBaseParser(object):
         if not pos:
             pos = self.bufpos + self.charpos
         self.fp.seek(pos)
-        print >>sys.stderr, 'poll(%d): %r' % (pos, self.fp.read(n))
+        log.warn('poll(%d): %r', pos, self.fp.read(n))  # TODO: info?
         self.fp.seek(pos0)
 
     def seek(self, pos):
         """Seeks the parser to the given position."""
-        if 2 <= self.debug:
-            print >>sys.stderr, 'seek: %r' % pos
+        log.debug('seek: %r', pos)
         self.fp.seek(pos)
         # reset the status for nextline()
         self.bufpos = pos
@@ -214,8 +212,7 @@ class PSBaseParser(object):
             else:
                 linebuf += self.buf[self.charpos:]
                 self.charpos = len(self.buf)
-        if 2 <= self.debug:
-            print >>sys.stderr, 'nextline: %r' % ((linepos, linebuf),)
+        log.debug('nextline: %r', (linepos, linebuf))
         return linepos, linebuf
 
     def revreadlines(self):
@@ -231,7 +228,8 @@ class PSBaseParser(object):
             pos = max(0, pos - self.BUFSIZ)
             self.fp.seek(pos)
             s = self.fp.read(prevpos-pos)
-            if not s: break
+            if not s:
+                break
             while 1:
                 n = max(s.rfind('\r'), s.rfind('\n'))
                 if n == -1:
@@ -451,8 +449,7 @@ class PSBaseParser(object):
             self.fillbuf()
             self.charpos = self._parse1(self.buf, self.charpos)
         token = self._tokens.pop(0)
-        if 2 <= self.debug:
-            print >>sys.stderr, 'nexttoken: %r' % (token,)
+        log.debug('nexttoken: %r', token)
         return token
 
 
@@ -486,23 +483,20 @@ class PSStackParser(PSBaseParser):
         return objs
 
     def add_results(self, *objs):
-        if 2 <= self.debug:
-            print >>sys.stderr, 'add_results: %r' % (objs,)
+        log.debug('add_results: %r', objs)
         self.results.extend(objs)
 
     def start_type(self, pos, type):
         self.context.append((pos, self.curtype, self.curstack))
         (self.curtype, self.curstack) = (type, [])
-        if 2 <= self.debug:
-            print >>sys.stderr, 'start_type: pos=%r, type=%r' % (pos, type)
+        log.debug('start_type: pos=%r, type=%r', pos, type)
 
     def end_type(self, type):
         if self.curtype != type:
             raise PSTypeError('Type mismatch: %r != %r' % (self.curtype, type))
         objs = [obj for (_, obj) in self.curstack]
         (pos, self.curtype, self.curstack) = self.context.pop()
-        if 2 <= self.debug:
-            print >>sys.stderr, 'end_type: pos=%r, type=%r, objs=%r' % (pos, type, objs)
+        log.debug('end_type: pos=%r, type=%r, objs=%r', pos, type, objs)
         return pos, objs
 
     def do_keyword(self, pos, token):
@@ -556,15 +550,12 @@ class PSStackParser(PSBaseParser):
                     if STRICT:
                         raise
             else:
-                if 2 <= self.debug:
-                    print >>sys.stderr, 'do_keyword: pos=%r, token=%r, stack=%r' % \
-                                        (pos, token, self.curstack)
+                log.debug('do_keyword: pos=%r, token=%r, stack=%r', pos, token, self.curstack)
                 self.do_keyword(pos, token)
             if self.context:
                 continue
             else:
                 self.flush()
         obj = self.results.pop(0)
-        if 2 <= self.debug:
-            print >>sys.stderr, 'nextobject: %r' % (obj,)
+        log.debug('nextobject: %r', obj)
         return obj

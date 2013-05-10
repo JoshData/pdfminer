@@ -24,13 +24,12 @@ Examples
 """
 
 import argparse
+import logging
 import sys
 
-from pdfminer.pdfparser import PDFDocument, PDFParser
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter, process_pdf
-from pdfminer.pdfdevice import PDFDevice, TagExtractor
+from pdfminer.pdfinterp import PDFResourceManager, process_pdf
+from pdfminer.pdfdevice import TagExtractor
 from pdfminer.converter import XMLConverter, HTMLConverter, TextConverter
-from pdfminer.cmapdb import CMapDB
 from pdfminer.layout import LAParams
 from pdfminer.image import ImageWriter
 
@@ -38,8 +37,8 @@ from pdfminer.image import ImageWriter
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Convert PDF into text.')
     parser.add_argument('file', nargs='*', type=argparse.FileType('rb'), default=sys.stdin, help='file(s) to convert')
-    parser.add_argument('-d', metavar='debug', nargs='?', default=argparse.SUPPRESS, type=int, help='debug level')
     parser.add_argument('-C', '--nocache', dest='cache', action='store_false', help='prevent object caching (slower)')
+    parser.add_argument('-l', metavar='level', default='warn', help='logging level (warn, info, debug)')
     parser.add_argument('-p', metavar='page', nargs='+', default=[], type=int, help='page number(s) (space separated)')
     parser.add_argument('-m', metavar='maxpages', default=0, type=int, help='maximum number of pages to extract')
     parser.add_argument('-P', metavar='password', default='', help='pdf password')
@@ -60,13 +59,8 @@ def main(argv=None):
     lagroup.add_argument('-s', metavar='scale', default=1, type=float, help='output scaling for HTML')
     args = parser.parse_args(argv)
 
-    debug = int(args.d or 1) if 'd' in args else 0
-    PDFDocument.debug = debug
-    PDFParser.debug = debug
-    CMapDB.debug = debug
-    PDFResourceManager.debug = debug
-    PDFPageInterpreter.debug = debug
-    PDFDevice.debug = debug
+    logging.basicConfig()
+    logging.getLogger('pdfminer').setLevel(args.l.upper())
 
     laparams = LAParams()
     if args.n:

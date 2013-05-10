@@ -19,6 +19,7 @@ Examples
 """
 
 import argparse
+import logging
 import os
 import sys
 import re
@@ -236,7 +237,7 @@ def dumppdf(outfp, fp, objids, pagenos, password='', dumpall=False, codec=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Dump pdf contents in XML format.')
     parser.add_argument('file', nargs='*', type=argparse.FileType('rb'), default=sys.stdin, help='file(s) to dump')
-    parser.add_argument('-d', metavar='debug', nargs='?', default=argparse.SUPPRESS, type=int, help='debug level')
+    parser.add_argument('-l', metavar='level', default='warn', help='logging level (warn, info, debug)')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-a', '--dumpall', action='store_true', help='dump all objects, not just trailer')
     group.add_argument('-T', '--dumpoutline', action='store_true', help='dump table of contents')
@@ -248,9 +249,10 @@ def main(argv=None):
     parser.add_argument('-o', metavar='outfile', type=argparse.FileType('wb'), default=sys.stdout,
                         help='output file name (default: stdout)')
     args = parser.parse_args(argv)
-    debug = int(args.d or 1) if 'd' in args else 0
-    PDFDocument.debug = debug
-    PDFParser.debug = debug
+
+    logging.basicConfig()
+    logging.getLogger('pdfminer').setLevel(args.l.upper())
+
     proc = dumppdf
     if args.dumpoutline:
         proc = dumpoutline

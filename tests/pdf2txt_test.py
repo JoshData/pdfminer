@@ -20,24 +20,14 @@ class TestPdf2Txt(unittest.TestCase):
 
 def test_generator(path, fmt):
     def test(self):
-
         outpath = '%s.%s' % (os.path.splitext(path)[0], fmt)
         refpath = '%s.ref' % outpath
-
         pdf2txt.main([path, '-p', '1', '-V', '-o', outpath])
         with open(outpath, 'r') as outf:
             with open(refpath, 'r') as reff:
                 self.assertEqual(reff.read(), outf.read())
     test.__doc__ = 'Test %s conversion to %s' % (os.path.basename(path), fmt)
     return test
-
-
-# dmca html xml txt
-# f1040nr html xml txt
-# i1040nr
-# jo
-# kampo -questionable... possibly worse
-# naacl06
 
 
 def generate_all_tests():

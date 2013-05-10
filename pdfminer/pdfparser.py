@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 
+import logging
 import re
 import struct
-import sys
 try:
     import hashlib as md5
 except ImportError:
@@ -24,6 +24,9 @@ from psparser import literal_name
 from psparser import LIT, KWD, STRICT
 from utils import choplist, nunpack
 from utils import decode_text, ObjIdRange
+
+
+log = logging.getLogger('pdfminer.pdfparser')
 
 
 class PDFSyntaxError(PDFException):
@@ -76,7 +79,7 @@ class PDFXRef(PDFBaseXRef):
         self.offsets = {}
         self.trailer = {}
 
-    def load(self, parser, debug=0):
+    def load(self, parser):
         while 1:
             try:
                 (pos, line) = parser.nextline()
@@ -108,8 +111,7 @@ class PDFXRef(PDFBaseXRef):
                 if use != 'n':
                     continue
                 self.offsets[objid] = (int(genno), long(pos))
-        if 1 <= debug:
-            print >>sys.stderr, 'xref objects:', self.offsets
+        log.info('xref objects: %r', self.offsets)
         self.load_trailer(parser)
 
     KEYWORD_TRAILER = KWD('trailer')
@@ -128,7 +130,7 @@ class PDFXRef(PDFBaseXRef):
 
     PDFOBJ_CUE = re.compile(r'^(\d+)\s+(\d+)\s+obj\b')
 
-    def load_fallback(self, parser, debug=0):
+    def load_fallback(self, parser):
         parser.seek(0)
         while 1:
             try:
@@ -138,8 +140,7 @@ class PDFXRef(PDFBaseXRef):
             if line.startswith('trailer'):
                 parser.seek(pos)
                 self.load_trailer(parser)
-                if 1 <= debug:
-                    print >>sys.stderr, 'trailer: %r' % self.get_trailer()
+                log.debug('trailer: %r', self.get_trailer())
                 break
             m = self.PDFOBJ_CUE.match(line)
             if not m: continue
@@ -171,7 +172,7 @@ class PDFXRefStream(PDFBaseXRef):
     def __repr__(self):
         return '<PDFXRefStream: fields=%d,%d,%d>' % (self.fl1, self.fl2, self.fl3)
 
-    def load(self, parser, debug=0):
+    def load(self, parser):
         (_, objid) = parser.nexttoken()  # ignored
         (_, genno) = parser.nexttoken()  # ignored
         (_, kwd) = parser.nexttoken()
@@ -187,9 +188,8 @@ class PDFXRefStream(PDFBaseXRef):
         self.data = stream.get_data()
         self.entlen = self.fl1 + self.fl2 + self.fl3
         self.trailer = stream.attrs
-        if 1 <= debug:
-            print >>sys.stderr, ('xref stream: objid=%s, fields=%d,%d,%d' %
-                                 (', '.join(map(repr, self.objid_ranges)), self.fl1, self.fl2, self.fl3))
+        log.info('xref stream: objid=%s, fields=%d,%d,%d',
+                     ', '.join(map(repr, self.objid_ranges)), self.fl1, self.fl2, self.fl3)
 
     def get_trailer(self):
         return self.trailer
@@ -293,8 +293,6 @@ class PDFDocument(object):
       obj = doc.getobj(objid)
     
     """
-
-    debug = 0
 
     def __init__(self, caching=True):
         self.caching = caching
@@ -407,8 +405,7 @@ class PDFDocument(object):
     def getobj(self, objid):
         if not self.xrefs:
             raise PDFException('PDFDocument is not initialized')
-        if 2 <= self.debug:
-            print >>sys.stderr, 'getobj: objid=%r' % objid
+        log.debug('getobj: objid=%r', objid)
         if objid in self._cached_objs:
             genno = 0
             obj = self._cached_objs[objid]
@@ -484,8 +481,7 @@ class PDFDocument(object):
                         obj.set_objid(objid, genno)
                 except PSEOF:
                     return None
-            if 2 <= self.debug:
-                print >>sys.stderr, 'register: objid=%r: %r' % (objid, obj)
+            log.debug('register: objid=%r: %r', objid, obj)
             if self.caching:
                 self._cached_objs[objid] = obj
         if self.decipher:
@@ -509,14 +505,12 @@ class PDFDocument(object):
                 if k in self.INHERITABLE_ATTRS and k not in tree:
                     tree[k] = v
             if tree.get('Type') is LITERAL_PAGES and 'Kids' in tree:
-                if 1 <= self.debug:
-                    print >>sys.stderr, 'Pages: Kids=%r' % tree['Kids']
+                log.info('Pages: Kids=%r', tree['Kids'])
                 for c in list_value(tree['Kids']):
                     for x in search(c, tree):
                         yield x
             elif tree.get('Type') is LITERAL_PAGE:
-                if 1 <= self.debug:
-                    print >>sys.stderr, 'Page: %r' % tree
+                log.info('Page: %r', tree)
                 yield (objid, tree)
         if 'Pages' not in self.catalog:
             return
@@ -673,8 +667,7 @@ class PDFParser(PSStackParser):
                 data += line
             self.seek(pos+objlen)
             # XXX limit objlen not to exceed object boundary
-            if 2 <= self.debug:
-                print >>sys.stderr, 'Stream: pos=%d, objlen=%d, dic=%r, data=%r...' % (pos, objlen, dic, data[:10])
+            log.debug('Stream: pos=%d, objlen=%d, dic=%r, data=%r...', pos, objlen, dic, data[:10])
             obj = PDFStream(dic, data, self.doc.decipher)
             self.push((pos, obj))
         else:
@@ -687,16 +680,14 @@ class PDFParser(PSStackParser):
         prev = None
         for line in self.revreadlines():
             line = line.strip()
-            if 2 <= self.debug:
-                print >>sys.stderr, 'find_xref: %r' % line
+            log.debug('find_xref: %r', line)
             if line == 'startxref':
                 break
             if line:
                 prev = line
         else:
             raise PDFNoValidXRef('Unexpected EOF')
-        if 1 <= self.debug:
-            print >>sys.stderr, 'xref found: pos=%r' % prev
+        log.debug('xref found: pos=%r', prev)
         return long(prev)
 
     # read xref table
@@ -708,23 +699,21 @@ class PDFParser(PSStackParser):
             (pos, token) = self.nexttoken()
         except PSEOF:
             raise PDFNoValidXRef('Unexpected EOF')
-        if 2 <= self.debug:
-            print >>sys.stderr, 'read_xref_from: start=%d, token=%r' % (start, token)
+        log.debug('read_xref_from: start=%d, token=%r', start, token)
         if isinstance(token, int):
             # XRefStream: PDF-1.5
             self.seek(pos)
             self.reset()
             xref = PDFXRefStream()
-            xref.load(self, debug=self.debug)
+            xref.load(self)
         else:
             if token is self.KEYWORD_XREF:
                 self.nextline()
             xref = PDFXRef()
-            xref.load(self, debug=self.debug)
+            xref.load(self)
         xrefs.append(xref)
         trailer = xref.get_trailer()
-        if 1 <= self.debug:
-            print >>sys.stderr, 'trailer: %r' % trailer
+        log.info('trailer: %r', trailer)
         if 'XRefStm' in trailer:
             pos = int_value(trailer['XRefStm'])
             self.read_xref_from(pos, xrefs)
@@ -742,8 +731,7 @@ class PDFParser(PSStackParser):
             self.read_xref_from(pos, xrefs)
         except PDFNoValidXRef:
             # fallback
-            if 1 <= self.debug:
-                print >>sys.stderr, 'no xref, fallback'
+            log.info('no xref, fallback')
             self.fallback = True
             xref = PDFXRef()
             xref.load_fallback(self)

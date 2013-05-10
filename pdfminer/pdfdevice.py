@@ -7,8 +7,6 @@ from utils import enc, bbox2str
 
 class PDFDevice(object):
 
-    debug = 0
-
     def __init__(self, rsrcmgr):
         self.rsrcmgr = rsrcmgr
         self.ctm = None
@@ -79,7 +77,7 @@ class PDFTextDevice(PDFDevice):
                                  font, fontsize, scaling, charspace, wordspace, rise, dxscale):
         needcharspace = False
         for obj in seq:
-            if isinstance(obj, int) or isinstance(obj, float):
+            if isinstance(obj, (int, float)):
                 x -= obj * dxscale
                 needcharspace = True
             else:
@@ -96,7 +94,7 @@ class PDFTextDevice(PDFDevice):
     def render_string_vertical(self, seq, matrix, (x, y), font, fontsize, scaling, charspace, wordspace, rise, dxscale):
         needcharspace = False
         for obj in seq:
-            if isinstance(obj, int) or isinstance(obj, float):
+            if isinstance(obj, (int, float)):
                 y -= obj * dxscale
                 needcharspace = True
             else:
@@ -115,11 +113,10 @@ class PDFTextDevice(PDFDevice):
 
 class TagExtractor(PDFDevice):
 
-    def __init__(self, rsrcmgr, outfp, codec='utf-8', debug=0):
+    def __init__(self, rsrcmgr, outfp, codec='utf-8'):
         PDFDevice.__init__(self, rsrcmgr)
         self.outfp = outfp
         self.codec = codec
-        self.debug = debug
         self.pageno = 0
         self._stack = []
 

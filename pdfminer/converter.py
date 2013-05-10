@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-import sys
+import logging
 
 from layout import LTContainer, LTPage, LTText, LTLine, LTRect, LTCurve
 from layout import LTFigure, LTImage, LTChar, LTAnon, LTTextLine
@@ -9,6 +9,9 @@ from pdfdevice import PDFTextDevice
 from pdffont import PDFUnicodeNotDefined
 from utils import apply_matrix_pt, mult_matrix
 from utils import enc, bbox2str
+
+
+log = logging.getLogger('pdfminer.converter')
 
 
 class PDFLayoutAnalyzer(PDFTextDevice):
@@ -93,8 +96,7 @@ class PDFLayoutAnalyzer(PDFTextDevice):
         return item.adv
 
     def handle_undefined_char(self, font, cid):
-        if self.debug:
-            print >>sys.stderr, 'undefined: %r, %r' % (font, cid)
+        log.info('undefined: %r, %r', font, cid)
         return '(cid:%d)' % cid
 
     def receive_layout(self, ltpage):
@@ -165,7 +167,6 @@ class TextConverter(PDFConverter):
 class HTMLConverter(PDFConverter):
 
     RECT_COLORS = {
-        #'char': 'green',
         'figure': 'yellow',
         'textline': 'magenta',
         'textbox': 'cyan',
@@ -181,7 +182,7 @@ class HTMLConverter(PDFConverter):
 
     def __init__(self, rsrcmgr, outfp, codec='utf-8', pageno=1, laparams=None, scale=1, fontscale=0.7,
                  layoutmode='normal', showpageno=True, pagemargin=50, imagewriter=None, rect_colors=None,
-                 text_colors=None):
+                 text_colors=None, debug=False):
         if text_colors is None:
             text_colors = {'char': 'black'}
         if rect_colors is None:
@@ -195,7 +196,7 @@ class HTMLConverter(PDFConverter):
         self.imagewriter = imagewriter
         self.rect_colors = rect_colors
         self.text_colors = text_colors
-        if self.debug:
+        if debug:
             self.rect_colors.update(self.RECT_COLORS)
             self.text_colors.update(self.TEXT_COLORS)
         self._yoffset = self.pagemargin
