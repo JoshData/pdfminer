@@ -22,7 +22,7 @@ def test_generator(path, fmt):
     def test(self):
         outpath = '%s.%s' % (os.path.splitext(path)[0], fmt)
         refpath = '%s.ref' % outpath
-        pdf2txt.main([path, '-p', '1', '-V', '-o', outpath])
+        pdf2txt.main([path, '-p', '1', '-V', '-o', outpath])  # '-l', 'debug',
         with open(outpath, 'r') as outf:
             with open(refpath, 'r') as reff:
                 self.assertEqual(reff.read(), outf.read())

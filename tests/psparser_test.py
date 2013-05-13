@@ -3,9 +3,14 @@
 
 """
 
+import logging
 import unittest
 
 from pdfminer.psparser import KWD, LIT, PSEOF, PSStackParser
+
+logging.basicConfig()
+logging.getLogger('pdfminer.psparser').setLevel(logging.DEBUG)
+logging.getLogger('pdfminer.pdfparser').setLevel(logging.DEBUG)
 
 
 class TestPSBaseParser(unittest.TestCase):
