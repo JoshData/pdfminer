@@ -10,7 +10,6 @@ ITU-T Recommendation T.6 "FACSIMILE CODING SCHEMES AND CODING CONTROL FUNCTIONS 
 """
 
 import array
-import sys
 
 
 class BitParser(object):

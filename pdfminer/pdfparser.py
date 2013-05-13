@@ -13,17 +13,11 @@ except ImportError:
     from StringIO import StringIO
 
 from arcfour import Arcfour
-from pdftypes import PDFException, PDFTypeError, PDFNotImplementedError
-from pdftypes import PDFStream, PDFObjRef
-from pdftypes import resolve1, decipher_all
-from pdftypes import int_value
-from pdftypes import str_value, list_value, dict_value, stream_value
-from psparser import PSStackParser
-from psparser import PSSyntaxError, PSEOF
-from psparser import literal_name
-from psparser import LIT, KWD, handle_error
-from utils import choplist, nunpack
-from utils import decode_text, ObjIdRange
+from pdftypes import PDFException, PDFTypeError, PDFNotImplementedError, PDFStream, PDFObjRef
+from pdftypes import dict_value, int_value, list_value, str_value, stream_value, resolve1, decipher_all
+from psparser import handle_error, KWD, literal_name, LIT, PSEOF, PSStackParser, PSSyntaxError
+from utils import cached_property, choplist, decode_text, nunpack, ObjIdRange
+from xmp import xmpparse
 
 
 log = logging.getLogger('pdfminer.pdfparser')
@@ -305,6 +299,14 @@ class PDFDocument(object):
         self._cached_objs = {}
         self._parsed_objs = {}
 
+    @cached_property
+    def metadata(self):
+        """Return a dictionary of metadata parsed from embedded XMP"""
+        meta = {}
+        if 'Metadata' in self.catalog:
+            meta = xmpparse(stream_value(self.catalog['Metadata']).get_data())
+        return meta
+
     def set_parser(self, parser):
         """Set the document to use a given PDFParser object."""
         if self._parser:
@@ -315,7 +317,8 @@ class PDFDocument(object):
         self.xrefs = parser.read_xref()
         for xref in self.xrefs:
             trailer = xref.get_trailer()
-            if not trailer: continue
+            if not trailer:
+                continue
             # If there's an encryption info, remember it.
             if 'Encrypt' in trailer:
                 #assert not self.encryption

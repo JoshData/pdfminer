@@ -363,3 +363,17 @@ class Plane(object):
         for obj in self._large:
             if obj.x1 > x0 and x1 > obj.x0 and obj.y1 > y0 and y1 > obj.y0:
                 yield obj
+
+
+class cached_property(object):
+    """A read-only @property that is only evaluated once."""
+    def __init__(self, fget, doc=None):
+        self.fget = fget
+        self.__doc__ = doc or fget.__doc__
+        self.__name__ = fget.__name__
+
+    def __get__(self, obj, cls):
+        if obj is None:
+            return self
+        obj.__dict__[self.__name__] = result = self.fget(obj)
+        return result
