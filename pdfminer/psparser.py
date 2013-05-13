@@ -7,7 +7,7 @@ from utils import choplist
 
 
 log = logging.getLogger('pdfminer.psparser')
-STRICT = 0
+STRICT = False
 
 
 class PSException(Exception):
@@ -28,6 +28,13 @@ class PSTypeError(PSException):
 
 class PSValueError(PSException):
     pass
+
+
+def handle_error(exctype, msg):
+    if STRICT:
+        raise exctype(msg)
+    else:
+        logging.warning(msg)
 
 
 class PSObject(object):
@@ -105,19 +112,15 @@ KEYWORD_DICT_END = KWD('>>')
 
 def literal_name(x):
     if not isinstance(x, PSLiteral):
-        if STRICT:
-            raise PSTypeError('Literal required: %r' % x)
-        else:
-            return str(x)
+        handle_error(PSTypeError, 'Literal required: %r' % x)
+        return str(x)
     return x.name
 
 
 def keyword_name(x):
     if not isinstance(x, PSKeyword):
-        if STRICT:
-            raise PSTypeError('Keyword required: %r' % x)
-        else:
-            return str(x)
+        handle_error(PSTypeError, 'Keyword required: %r' % x)
+        return str(x)
     return x.name
 
 
@@ -521,9 +524,8 @@ class PSStackParser(PSBaseParser):
                 # end array
                 try:
                     self.push(self.end_type('a'))
-                except PSTypeError:
-                    if STRICT:
-                        raise
+                except PSTypeError, e:
+                    handle_error(type(e), str(e))
             elif token == KEYWORD_DICT_BEGIN:
                 # begin dictionary
                 self.start_type(pos, 'd')
@@ -532,13 +534,12 @@ class PSStackParser(PSBaseParser):
                 try:
                     (pos, objs) = self.end_type('d')
                     if len(objs) % 2 != 0:
-                        raise PSSyntaxError('Invalid dictionary construct: %r' % objs)
+                        handle_error(PSSyntaxError, 'Invalid dictionary construct: %r' % objs)
                     # construct a Python dictionary.
                     d = dict((literal_name(k), v) for (k,v) in choplist(2, objs) if v is not None)
                     self.push((pos, d))
                 except PSTypeError:
-                    if STRICT:
-                        raise
+                    handle_error(type(e), str(e))
             elif token == KEYWORD_PROC_BEGIN:
                 # begin proc
                 self.start_type(pos, 'p')
@@ -547,8 +548,7 @@ class PSStackParser(PSBaseParser):
                 try:
                     self.push(self.end_type('p'))
                 except PSTypeError:
-                    if STRICT:
-                        raise
+                    handle_error(type(e), str(e))
             else:
                 log.debug('do_keyword: pos=%r, token=%r, stack=%r', pos, token, self.curstack)
                 self.do_keyword(pos, token)

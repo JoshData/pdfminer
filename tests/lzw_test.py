@@ -19,6 +19,7 @@ class TestLZW(unittest.TestCase):
     def test_lzwdecode_corrupt(self):
         """Test lzwdecode gracefully ignores corrupt data"""
         self.assertEqual(self.decoded, lzwdecode('\x80\x0b\x60\x50\x22\x0c\x0c\x85\x01\xff\xff'))
+        self.assertEqual('', lzwdecode('\x80\x80\r\n'))
 
 
 if __name__ == '__main__':

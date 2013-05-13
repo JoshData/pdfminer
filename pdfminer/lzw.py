@@ -60,7 +60,11 @@ class LZWDecoder(object):
         elif code == 257:
             pass
         elif not self.prevbuf:
-            x = self.prevbuf = self.table[code]
+            try:
+                x = self.prevbuf = self.table[code]
+            except (TypeError, IndexError):
+                # TypeError: table is None
+                raise CorruptDataError()
         else:
             if code < len(self.table):
                 x = self.table[code]
@@ -93,7 +97,7 @@ class LZWDecoder(object):
                 # just ignore corrupt data and stop yielding there
                 break
             yield x
-            log.debug('nbits=%d, code=%d, output=%r, table=%r', self.nbits, code, x, self.table[258:])
+            log.debug('nbits=%d, code=%d, output=%r, table=%r', self.nbits, code, x, self.table)
 
 
 def lzwdecode(data):

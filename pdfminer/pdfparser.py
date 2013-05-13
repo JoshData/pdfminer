@@ -21,7 +21,7 @@ from pdftypes import str_value, list_value, dict_value, stream_value
 from psparser import PSStackParser
 from psparser import PSSyntaxError, PSEOF
 from psparser import literal_name
-from psparser import LIT, KWD, STRICT
+from psparser import LIT, KWD, handle_error
 from utils import choplist, nunpack
 from utils import decode_text, ObjIdRange
 
@@ -330,8 +330,7 @@ class PDFDocument(object):
         else:
             raise PDFSyntaxError('No /Root object! - Is this really a PDF?')
         if self.catalog.get('Type') is not LITERAL_CATALOG:
-            if STRICT:
-                raise PDFSyntaxError('Catalog not found!')
+            handle_error(PDFSyntaxError, 'Catalog not found!')
 
     PASSWORD_PADDING = '(\xbfN^Nu\x8aAd\x00NV\xff\xfa\x01\x08..\x00\xb6\xd0h>\x80/\x0c\xa9\xfedSiz'
 
@@ -417,20 +416,17 @@ class PDFDocument(object):
                 except KeyError:
                     pass
             else:
-                if STRICT:
-                    raise PDFSyntaxError('Cannot locate objid=%r' % objid)
+                handle_error(PDFSyntaxError, 'Cannot locate objid=%r' % objid)
                 # return null for a nonexistent reference.
                 return None
             if strmid:
                 stream = stream_value(self.getobj(strmid))
                 if stream.get('Type') is not LITERAL_OBJSTM:
-                    if STRICT:
-                        raise PDFSyntaxError('Not a stream object: %r' % stream)
+                    handle_error(PDFSyntaxError, 'Not a stream object: %r' % stream)
                 try:
                     n = stream['N']
                 except KeyError:
-                    if STRICT:
-                        raise PDFSyntaxError('N is not defined: %r' % stream)
+                    handle_error(PDFSyntaxError, 'N is not defined: %r' % stream)
                     n = 0
                 if strmid in self._parsed_objs:
                     objs = self._parsed_objs[strmid]
@@ -451,14 +447,17 @@ class PDFDocument(object):
                 try:
                     obj = objs[i]
                 except IndexError:
-                    if STRICT:
-                        raise PDFSyntaxError('Invalid object number: objid=%r' % objid)
+                    handle_error(PDFSyntaxError, 'Invalid object number: objid=%r' % objid)
                     # return None for an invalid object number
                     return None
                 if isinstance(obj, PDFStream):
                     obj.set_objid(objid, 0)
             else:
-                self._parser.seek(index)
+                try:
+                    self._parser.seek(index)
+                except PSEOF:
+                    handle_error(PSEOF, 'Parser index out of bounds')
+                    return None
                 (_, objid1) = self._parser.nexttoken()  # objid
                 (_, genno) = self._parser.nexttoken()  # genno
                 (_, kwd) = self._parser.nexttoken()
@@ -638,14 +637,12 @@ class PDFParser(PSStackParser):
                 try:
                     objlen = int_value(dic['Length'])
                 except KeyError:
-                    if STRICT:
-                        raise PDFSyntaxError('/Length is undefined: %r' % dic)
+                    handle_error(PDFSyntaxError, '/Length is undefined: %r' % dic)
             self.seek(pos)
             try:
                 (_, line) = self.nextline()  # 'stream'
             except PSEOF:
-                if STRICT:
-                    raise PDFSyntaxError('Unexpected EOF')
+                handle_error(PDFSyntaxError, 'Unexpected EOF')
                 return
             pos += len(line)
             self.fp.seek(pos)
@@ -655,8 +652,7 @@ class PDFParser(PSStackParser):
                 try:
                     (linepos, line) = self.nextline()
                 except PSEOF:
-                    if STRICT:
-                        raise PDFSyntaxError('Unexpected EOF')
+                    handle_error(PDFSyntaxError, 'Unexpected EOF')
                     break
                 if 'endstream' in line:
                     i = line.index('endstream')

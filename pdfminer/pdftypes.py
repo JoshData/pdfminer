@@ -7,7 +7,7 @@ from ccitt import ccittfaxdecode
 from lzw import lzwdecode
 from runlength import rldecode
 from psparser import PSException, PSObject
-from psparser import LIT, STRICT
+from psparser import LIT, handle_error
 from utils import apply_png_predictor
 
 
@@ -47,8 +47,7 @@ class PDFObjRef(PDFObject):
 
     def __init__(self, doc, objid, _):
         if objid == 0:
-            if STRICT:
-                raise PDFValueError('PDF object id cannot be 0.')
+            handle_error(PDFValueError, 'PDF object id cannot be 0.')
         self.doc = doc
         self.objid = objid
         #self.genno = genno  # Never used.
@@ -102,8 +101,7 @@ def decipher_all(decipher, objid, genno, x):
 def int_value(x):
     x = resolve1(x)
     if not isinstance(x, int):
-        if STRICT:
-            raise PDFTypeError('Integer required: %r' % x)
+        handle_error(PDFTypeError, 'Integer required: %r' % x)
         return 0
     return x
 
@@ -111,8 +109,7 @@ def int_value(x):
 def float_value(x):
     x = resolve1(x)
     if not isinstance(x, float):
-        if STRICT:
-            raise PDFTypeError('Float required: %r' % x)
+        handle_error(PDFTypeError, 'Float required: %r' % x)
         return 0.0
     return x
 
@@ -120,8 +117,7 @@ def float_value(x):
 def num_value(x):
     x = resolve1(x)
     if not (isinstance(x, int) or isinstance(x, float)):
-        if STRICT:
-            raise PDFTypeError('Int or Float required: %r' % x)
+        handle_error(PDFTypeError, 'Integer or Float required: %r' % x)
         return 0
     return x
 
@@ -129,8 +125,7 @@ def num_value(x):
 def str_value(x):
     x = resolve1(x)
     if not isinstance(x, str):
-        if STRICT:
-            raise PDFTypeError('String required: %r' % x)
+        handle_error(PDFTypeError, 'String required: %r' % x)
         return ''
     return x
 
@@ -138,8 +133,7 @@ def str_value(x):
 def list_value(x):
     x = resolve1(x)
     if not (isinstance(x, list) or isinstance(x, tuple)):
-        if STRICT:
-            raise PDFTypeError('List required: %r' % x)
+        handle_error(PDFTypeError, 'List required: %r' % x)
         return []
     return x
 
@@ -147,8 +141,7 @@ def list_value(x):
 def dict_value(x):
     x = resolve1(x)
     if not isinstance(x, dict):
-        if STRICT:
-            raise PDFTypeError('Dict required: %r' % x)
+        handle_error(PDFTypeError, 'Dict required: %r' % x)
         return {}
     return x
 
@@ -156,8 +149,7 @@ def dict_value(x):
 def stream_value(x):
     x = resolve1(x)
     if not isinstance(x, PDFStream):
-        if STRICT:
-            raise PDFTypeError('PDFStream required: %r' % x)
+        handle_error(PDFTypeError, 'PDFStream required: %r' % x)
         return PDFStream({}, '')
     return x
 
@@ -221,13 +213,15 @@ class PDFStream(PDFObject):
             return
         for f in filters:
             params = self.get_any(('DP', 'DecodeParms', 'FDecodeParms'), {})
+            if f is None:
+                # Oops, broken reference. use FlateDecode since it's the most popular.
+                f = LIT('FlateDecode')
             if f in LITERALS_FLATE_DECODE:
                 # will get errors if the document is encrypted.
                 try:
                     data = zlib.decompress(data)
                 except zlib.error, e:
-                    if STRICT:
-                        raise PDFException('Invalid zlib bytes: %r, %r' % (e, data))
+                    handle_error(PDFException, 'Invalid zlib bytes: %r, %r' % (e, data))
                     data = ''
             elif f in LITERALS_LZW_DECODE:
                 data = lzwdecode(data)
@@ -237,6 +231,10 @@ class PDFStream(PDFObject):
                 data = asciihexdecode(data)
             elif f in LITERALS_RUNLENGTH_DECODE:
                 data = rldecode(data)
+            elif f in LITERALS_DCT_DECODE:
+                # /DCTDecode is essentially a jpeg image. There's nothing to "decode" per se, simply
+                # use the data as jpeg data.
+                pass
             elif f in LITERALS_CCITTFAX_DECODE:
                 data = ccittfaxdecode(data, params)
             elif f == LITERAL_CRYPT:

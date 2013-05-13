@@ -1,5 +1,7 @@
 #!/usr/bin/env python2
 
+import logging
+
 from utils import INF, Plane, get_bound, uniq, fsplit, isany, dist, bbox2str, matrix2str, apply_matrix_pt
 
 
@@ -475,6 +477,11 @@ class LTLayoutContainer(LTContainer):
             yield box
 
     def group_textboxes(self, laparams, boxes):
+        if len(boxes) > 100:
+            # Grouping this many boxes would take too long and it doesn't make much sense to do so
+            # considering the type of grouping (nesting 2-sized subgroups) that is done here.
+            logging.info("Too many boxes (%d) to group, skipping.", len(boxes))
+            return boxes
         dists = []
         for obj1, obj2 in zip(boxes[0:], boxes[1:]):
             dists.append((0, dist(obj1, obj2), obj1, obj2))
