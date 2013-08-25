@@ -20,7 +20,7 @@ class BitParser(object):
     @classmethod
     def add(cls, root, v, bits):
         p = root
-        for i in xrange(len(bits)):
+        for i in range(len(bits)):
             if 0 < i:
                 if p[b] is None:
                     p[b] = [None, None]
@@ -413,7 +413,7 @@ class CCITTG4Parser(BitParser):
         self._state = self.MODE
 
     def output_line(self, y, bits):
-        print y, ''.join(str(b) for b in bits)
+        print(y, ''.join(str(b) for b in bits))
     
     def _reset_line(self):
         self._refline = self._curline
@@ -446,10 +446,10 @@ class CCITTG4Parser(BitParser):
         x0 = max(0, self._curpos)
         x1 = max(0, min(self.width, x1))
         if x1 < x0:
-            for x in xrange(x1, x0):
+            for x in range(x1, x0):
                 self._curline[x] = self._color
         elif x0 < x1:
-            for x in xrange(x0, x1):
+            for x in range(x0, x1):
                 self._curline[x] = self._color
         self._curpos = x1
         self._color = 1 - self._color
@@ -476,7 +476,7 @@ class CCITTG4Parser(BitParser):
             elif self._refline[x1 - 1] != self._color and self._refline[x1] == self._color:
                 break
             x1 += 1
-        for x in xrange(self._curpos, x1):
+        for x in range(self._curpos, x1):
             self._curline[x] = self._color
         self._curpos = x1
     
@@ -485,12 +485,12 @@ class CCITTG4Parser(BitParser):
         if self._curpos < 0:
             self._curpos = 0
         x = self._curpos
-        for _ in xrange(n1):
+        for _ in range(n1):
             if len(self._curline) <= x:
                 break
             self._curline[x] = self._color
             x += 1
-        for _ in xrange(n2):
+        for _ in range(n2):
             if len(self._curline) <= x:
                 break
             self._curline[x] = 1 - self._color

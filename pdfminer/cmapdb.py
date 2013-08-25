@@ -10,19 +10,19 @@ More information is available on the Adobe website:
 
 """
 
-import cPickle as pickle
+import pickle as pickle
 import gzip
 import logging
 import os
 import struct
 import sys
 
-from encodingdb import name2unicode
-from psparser import literal_name
-from psparser import PSLiteral
-from psparser import PSStackParser
-from psparser import PSSyntaxError, PSEOF
-from utils import choplist, nunpack
+from .encodingdb import name2unicode
+from .psparser import literal_name
+from .psparser import PSLiteral
+from .psparser import PSStackParser
+from .psparser import PSSyntaxError, PSEOF
+from .utils import choplist, nunpack
 
 
 log = logging.getLogger('pdfminer.cmapdb')
@@ -44,7 +44,7 @@ class CMap(object):
         assert isinstance(cmap, CMap)
 
         def copy(dst, src):
-            for (k, v) in src.iteritems():
+            for (k, v) in src.items():
                 if isinstance(v, dict):
                     d = {}
                     dst[k] = d
@@ -70,7 +70,7 @@ class CMap(object):
         if code2cid is None:
             code2cid = self.code2cid
             code = ()
-        for (k, v) in sorted(code2cid.iteritems()):
+        for (k, v) in sorted(code2cid.items()):
             c = code+(k,)
             if isinstance(v, int):
                 out.write('code %r = cid %d\n' % (c, v))
@@ -108,7 +108,7 @@ class UnicodeMap(object):
         return self.cid2unichr[cid]
 
     def dump(self, out=sys.stdout):
-        for (k, v) in sorted(self.cid2unichr.iteritems()):
+        for (k, v) in sorted(self.cid2unichr.items()):
             out.write('cid %d = unicode %r\n' % (k, v))
 
 
@@ -161,9 +161,9 @@ class FileUnicodeMap(UnicodeMap):
             self.cid2unichr[cid] = name2unicode(code.name)
         elif isinstance(code, str):
             # Interpret as UTF-16BE.
-            self.cid2unichr[cid] = unicode(code, 'UTF-16BE', 'ignore')
+            self.cid2unichr[cid] = str(code, 'UTF-16BE', 'ignore')
         elif isinstance(code, int):
-            self.cid2unichr[cid] = unichr(code)
+            self.cid2unichr[cid] = chr(code)
         else:
             raise TypeError(code)
 
@@ -315,7 +315,7 @@ class CMapParser(PSStackParser):
                 e1 = nunpack(evar)
                 vlen = len(svar)
                 #assert s1 <= e1
-                for i in xrange(e1 - s1 + 1):
+                for i in range(e1 - s1 + 1):
                     x = sprefix+struct.pack('>L', s1 + i)[-vlen:]
                     self.cmap.add_code2cid(x, cid+i)
             return
@@ -342,14 +342,14 @@ class CMapParser(PSStackParser):
                 e1 = nunpack(e)
                 #assert s1 <= e1
                 if isinstance(code, list):
-                    for i in xrange(e1 - s1 + 1):
+                    for i in range(e1 - s1 + 1):
                         self.cmap.add_cid2unichr(s1 + i, code[i])
                 else:
                     var = code[-4:]
                     base = nunpack(var)
                     prefix = code[:-4]
                     vlen = len(var)
-                    for i in xrange(e1 - s1 + 1):
+                    for i in range(e1 - s1 + 1):
                         x = prefix+struct.pack('>L', base + i)[-vlen:]
                         self.cmap.add_cid2unichr(s1 + i, x)
             return

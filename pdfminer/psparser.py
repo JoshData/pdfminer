@@ -3,7 +3,7 @@
 import logging
 import re
 
-from utils import choplist
+from .utils import choplist
 
 
 log = logging.getLogger('pdfminer.psparser')
@@ -524,7 +524,7 @@ class PSStackParser(PSBaseParser):
                 # end array
                 try:
                     self.push(self.end_type('a'))
-                except PSTypeError, e:
+                except PSTypeError as e:
                     handle_error(type(e), str(e))
             elif token == KEYWORD_DICT_BEGIN:
                 # begin dictionary

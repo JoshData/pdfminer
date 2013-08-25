@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-from psparser import LIT
+from .psparser import LIT
 
 
 LITERAL_DEVICE_GRAY = LIT('DeviceGray')
@@ -29,4 +29,4 @@ PREDEFINED_COLORSPACE = dict(
         'Separation': 1,
         'Indexed': 1,
         'Pattern': 1,
-    }.iteritems())
+    }.items())

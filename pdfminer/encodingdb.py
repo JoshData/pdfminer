@@ -2,9 +2,9 @@
 
 import re
 
-from glyphlist import glyphname2unicode
-from latin_enc import ENCODING
-from psparser import PSLiteral
+from .glyphlist import glyphname2unicode
+from .latin_enc import ENCODING
+from .psparser import PSLiteral
 
 
 STRIP_NAME = re.compile(r'[0-9]+')
@@ -16,7 +16,7 @@ def name2unicode(name):
         return glyphname2unicode[name]
     m = STRIP_NAME.search(name)
     if not m: raise KeyError(name)
-    return unichr(int(m.group(0)))
+    return chr(int(m.group(0)))
 
 
 class EncodingDB(object):

@@ -2,13 +2,13 @@
 
 import logging
 
-from layout import LTContainer, LTPage, LTText, LTLine, LTRect, LTCurve
-from layout import LTFigure, LTImage, LTChar, LTAnon, LTTextLine
-from layout import LTTextBox, LTTextBoxVertical, LTTextGroup
-from pdfdevice import PDFTextDevice
-from pdffont import PDFUnicodeNotDefined
-from utils import apply_matrix_pt, mult_matrix
-from utils import enc, bbox2str
+from .layout import LTContainer, LTPage, LTText, LTLine, LTRect, LTCurve
+from .layout import LTFigure, LTImage, LTChar, LTAnon, LTTextLine
+from .layout import LTTextBox, LTTextBoxVertical, LTTextGroup
+from .pdfdevice import PDFTextDevice
+from .pdffont import PDFUnicodeNotDefined
+from .utils import apply_matrix_pt, mult_matrix
+from .utils import enc, bbox2str
 
 
 log = logging.getLogger('pdfminer.converter')
@@ -79,14 +79,14 @@ class PDFLayoutAnalyzer(PDFTextDevice):
         # other shapes
         pts = []
         for p in path:
-            for i in xrange(1, len(p), 2):
+            for i in range(1, len(p), 2):
                 pts.append(apply_matrix_pt(self.ctm, (p[i], p[i + 1])))
         self.cur_item.add(LTCurve(gstate.linewidth, pts))
 
     def render_char(self, matrix, font, fontsize, scaling, rise, cid):
         try:
             text = font.to_unichr(cid)
-            assert isinstance(text, unicode), text
+            assert isinstance(text, str), text
         except PDFUnicodeNotDefined:
             text = self.handle_undefined_char(font, cid)
         textwidth = font.char_width(cid)
@@ -214,7 +214,7 @@ class HTMLConverter(PDFConverter):
 
     def write_footer(self):
         self.write('<div style="position:absolute; top:0px;">Page: %s</div>\n' %
-                   ', '.join('<a href="#%s">%s</a>' % (i, i) for i in xrange(1, self.pageno)))
+                   ', '.join('<a href="#%s">%s</a>' % (i, i) for i in range(1, self.pageno)))
         self.write('</body></html>\n')
 
     def write_text(self, text):

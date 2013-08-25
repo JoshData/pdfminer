@@ -6,11 +6,11 @@ usage:
 
 """
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import sys
-from httplib import responses
-from BaseHTTPServer import HTTPServer
-from SimpleHTTPServer import SimpleHTTPRequestHandler
+from http.client import responses
+from http.server import HTTPServer
+from http.server import SimpleHTTPRequestHandler
 
 
 class WebAppHandler(SimpleHTTPRequestHandler):
@@ -37,7 +37,7 @@ class WebAppHandler(SimpleHTTPRequestHandler):
             script, rest = rest, ''
         scriptname = '/' + script
         scriptfile = self.translate_path(scriptname)
-        uqrest = urllib.unquote(rest)
+        uqrest = urllib.parse.unquote(rest)
         env = {
             'SERVER_SOFTWARE': self.version_string(),
             'SERVER_NAME': self.server.server_name,
@@ -72,7 +72,7 @@ class WebAppHandler(SimpleHTTPRequestHandler):
         ua = self.headers.getheader('user-agent')
         if ua:
             env['HTTP_USER_AGENT'] = ua
-        co = filter(None, self.headers.getheaders('cookie'))
+        co = [_f for _f in self.headers.getheaders('cookie') if _f]
         if co:
             env['HTTP_COOKIE'] = ', '.join(co)
         for k in ('QUERY_STRING', 'REMOTE_HOST', 'CONTENT_LENGTH',
@@ -89,7 +89,7 @@ def main(argv):
     import imp
 
     def usage():
-        print 'usage: %s [-h host] [-p port] [-n name] module.class' % argv[0]
+        print('usage: %s [-h host] [-p port] [-n name] module.class' % argv[0])
         return 100
     try:
         (opts, args) = getopt.getopt(argv[1:], 'h:p:n:')
@@ -110,7 +110,7 @@ def main(argv):
     path = args.pop(0)
     module = imp.load_source('app', path)
     WebAppHandler.APP_CLASS = getattr(module, name)
-    print 'Listening %s:%d...' % (host, port)
+    print('Listening %s:%d...' % (host, port))
     httpd = HTTPServer((host, port), WebAppHandler)
     httpd.serve_forever()
 

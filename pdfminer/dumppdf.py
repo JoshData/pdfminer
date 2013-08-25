@@ -43,7 +43,7 @@ def dumpxml(out, obj, codec=None):
     
     if isinstance(obj, dict):
         out.write('<dict size="%d">\n' % len(obj))
-        for (k, v) in obj.iteritems():
+        for (k, v) in obj.items():
             out.write('<key>%s</key>\n' % k)
             out.write('<value>')
             dumpxml(out, v)
@@ -190,7 +190,7 @@ def extractembedded(outfp, fp, objids, pagenos, password='', dumpall=False, code
                     if not isinstance(fileobj['Type'], PSLiteral) or not fileobj['Type'].name == 'EmbeddedFile':
                         raise Exception("unable to process PDF: reference for %s is not an EmbeddedFile" % filename)
 
-                    print "extracting", filename
+                    print("extracting", filename)
                     absfilename = os.path.normpath(os.path.abspath(filename))
                     if not absfilename.startswith(cwd):
                         raise Exception("filename %s is trying to escape to parent directories." % filename)

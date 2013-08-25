@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 
-from pdffont import PDFUnicodeNotDefined
-from utils import mult_matrix, translate_matrix
-from utils import enc, bbox2str
+from .pdffont import PDFUnicodeNotDefined
+from .utils import mult_matrix, translate_matrix
+from .utils import enc, bbox2str
 
 
 class PDFDevice(object):
@@ -73,8 +73,9 @@ class PDFTextDevice(PDFDevice):
                 seq, matrix, textstate.linematrix, font, fontsize,
                 scaling, charspace, wordspace, rise, dxscale)
 
-    def render_string_horizontal(self, seq, matrix, (x, y),
+    def render_string_horizontal(self, seq, matrix, xxx_todo_changeme,
                                  font, fontsize, scaling, charspace, wordspace, rise, dxscale):
+        (x, y) = xxx_todo_changeme
         needcharspace = False
         for obj in seq:
             if isinstance(obj, (int, float)):
@@ -91,7 +92,8 @@ class PDFTextDevice(PDFDevice):
                     needcharspace = True
         return x, y
 
-    def render_string_vertical(self, seq, matrix, (x, y), font, fontsize, scaling, charspace, wordspace, rise, dxscale):
+    def render_string_vertical(self, seq, matrix, xxx_todo_changeme1, font, fontsize, scaling, charspace, wordspace, rise, dxscale):
+        (x, y) = xxx_todo_changeme1
         needcharspace = False
         for obj in seq:
             if isinstance(obj, (int, float)):
@@ -144,7 +146,7 @@ class TagExtractor(PDFDevice):
     def begin_tag(self, tag, props=None):
         s = ''
         if isinstance(props, dict):
-            s = ''.join(' %s="%s"' % (enc(k), enc(str(v))) for (k, v) in sorted(props.iteritems()))
+            s = ''.join(' %s="%s"' % (enc(k), enc(str(v))) for (k, v) in sorted(props.items()))
         self.outfp.write('<%s%s>' % (enc(tag.name), s))
         self._stack.append(tag)
 

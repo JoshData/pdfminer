@@ -8,16 +8,16 @@ try:
 except ImportError:
     import md5
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
-from arcfour import Arcfour
-from pdftypes import PDFException, PDFTypeError, PDFNotImplementedError, PDFStream, PDFObjRef
-from pdftypes import dict_value, int_value, list_value, str_value, stream_value, resolve1, decipher_all
-from psparser import handle_error, KWD, literal_name, LIT, PSEOF, PSStackParser, PSSyntaxError
-from utils import cached_property, choplist, decode_text, nunpack, ObjIdRange
-from xmp import xmpparse
+from .arcfour import Arcfour
+from .pdftypes import PDFException, PDFTypeError, PDFNotImplementedError, PDFStream, PDFObjRef
+from .pdftypes import dict_value, int_value, list_value, str_value, stream_value, resolve1, decipher_all
+from .psparser import handle_error, KWD, literal_name, LIT, PSEOF, PSStackParser, PSSyntaxError
+from .utils import cached_property, choplist, decode_text, nunpack, ObjIdRange
+from .xmp import xmpparse
 
 
 log = logging.getLogger('pdfminer.pdfparser')
@@ -90,10 +90,10 @@ class PDFXRef(PDFBaseXRef):
             if len(f) != 2:
                 raise PDFNoValidXRef('Trailer not found: %r: line=%r' % (parser, line))
             try:
-                (start, nobjs) = map(long, f)
+                (start, nobjs) = list(map(int, f))
             except ValueError:
                 raise PDFNoValidXRef('Invalid line: %r: line=%r' % (parser, line))
-            for objid in xrange(start, start + nobjs):
+            for objid in range(start, start + nobjs):
                 try:
                     (_, line) = parser.nextline()
                 except PSEOF:
@@ -104,7 +104,7 @@ class PDFXRef(PDFBaseXRef):
                 (pos, genno, use) = f
                 if use != 'n':
                     continue
-                self.offsets[objid] = (int(genno), long(pos))
+                self.offsets[objid] = (int(genno), int(pos))
         log.info('xref objects: %r', self.offsets)
         self.load_trailer(parser)
 
@@ -145,7 +145,7 @@ class PDFXRef(PDFBaseXRef):
         return self.trailer
 
     def get_objids(self):
-        return self.offsets.iterkeys()
+        return iter(self.offsets.keys())
 
     def get_pos(self, objid):
         try:
@@ -190,7 +190,7 @@ class PDFXRefStream(PDFBaseXRef):
 
     def get_objids(self):
         for objid_range in self.objid_ranges:
-            for x in xrange(objid_range.get_start_id(), objid_range.get_end_id() + 1):
+            for x in range(objid_range.get_start_id(), objid_range.get_end_id() + 1):
                 yield x
 
     def get_pos(self, objid):
@@ -372,7 +372,7 @@ class PDFDocument(object):
             raise PDFNotImplementedError('Revision 4 encryption is currently unsupported')
         if 3 <= R:
             # 8
-            for _ in xrange(50):
+            for _ in range(50):
                 md5hash = md5.md5(md5hash.digest()[:length / 8])
         key = md5hash.digest()[:length / 8]
         if R == 2:
@@ -383,7 +383,7 @@ class PDFDocument(object):
             md5hash = md5.md5(self.PASSWORD_PADDING)  # 2
             md5hash.update(docid[0])  # 3
             x = Arcfour(key).process(md5hash.digest()[:16])  # 4
-            for i in xrange(1, 19 + 1):
+            for i in range(1, 19 + 1):
                 k = ''.join(chr(ord(c) ^ i) for c in key)
                 x = Arcfour(k).process(x)
             u1 = x + x  # 32bytes total
@@ -503,7 +503,7 @@ class PDFDocument(object):
             else:
                 objid = obj.objid
                 tree = dict_value(obj).copy()
-            for (k, v) in parent.iteritems():
+            for (k, v) in parent.items():
                 if k in self.INHERITABLE_ATTRS and k not in tree:
                     tree[k] = v
             if tree.get('Type') is LITERAL_PAGES and 'Kids' in tree:
@@ -687,7 +687,7 @@ class PDFParser(PSStackParser):
         else:
             raise PDFNoValidXRef('Unexpected EOF')
         log.debug('xref found: pos=%r', prev)
-        return long(prev)
+        return int(prev)
 
     # read xref table
     def read_xref_from(self, start, xrefs):

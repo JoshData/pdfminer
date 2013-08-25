@@ -13,7 +13,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 
-from utils import cached_property
+from .utils import cached_property
 
 RDF_NS = '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}'
 XML_NS = '{http://www.w3.org/XML/1998/namespace}'

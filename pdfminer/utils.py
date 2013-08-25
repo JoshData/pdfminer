@@ -2,7 +2,7 @@
 """Miscellaneous Routines."""
 
 import struct
-from sys import maxint as INF
+from sys import maxsize as INF
 
 
 def apply_png_predictor(pred, colors, columns, bitspercomponent, data):
@@ -17,7 +17,7 @@ def apply_png_predictor(pred, colors, columns, bitspercomponent, data):
         pred = ord(data[i])
         line1 = data[i + 1:i + nbytes + 1]
         if pred != 2:
-            print repr(pred), repr(line1)
+            print(repr(pred), repr(line1))
         if pred == 0:
             # PNG none
             pass
@@ -53,26 +53,34 @@ def apply_png_predictor(pred, colors, columns, bitspercomponent, data):
 MATRIX_IDENTITY = (1, 0, 0, 1, 0, 0)
 
 
-def mult_matrix((a1, b1, c1, d1, e1, f1), (a0, b0, c0, d0, e0, f0)):
+def mult_matrix(xxx_todo_changeme3, xxx_todo_changeme4):
     """Returns the multiplication of two matrices."""
+    (a1, b1, c1, d1, e1, f1) = xxx_todo_changeme3
+    (a0, b0, c0, d0, e0, f0) = xxx_todo_changeme4
     return (a0 * a1 + c0 * b1, b0 * a1 + d0 * b1,
             a0 * c1 + c0 * d1, b0 * c1 + d0 * d1,
             a0 * e1 + c0 * f1 + e0,
             b0 * e1 + d0 * f1 + f0)
 
 
-def translate_matrix((a, b, c, d, e, f), (x, y)):
+def translate_matrix(xxx_todo_changeme5, xxx_todo_changeme6):
     """Translates a matrix by (x,y)."""
+    (a, b, c, d, e, f) = xxx_todo_changeme5
+    (x, y) = xxx_todo_changeme6
     return a, b, c, d, x * a + y * c + e, x * b + y * d + f
 
 
-def apply_matrix_pt((a, b, c, d, e, f), (x, y)):
+def apply_matrix_pt(xxx_todo_changeme7, xxx_todo_changeme8):
     """Applies a matrix to a point."""
+    (a, b, c, d, e, f) = xxx_todo_changeme7
+    (x, y) = xxx_todo_changeme8
     return a * x + c * y + e, b * x + d * y + f
 
 
-def apply_matrix_norm((a, b, c, d, e, f), (p, q)):
+def apply_matrix_norm(xxx_todo_changeme9, xxx_todo_changeme10):
     """Equivalent to apply_matrix_pt(M, (p,q)) - apply_matrix_pt(M, (0,0))"""
+    (a, b, c, d, e, f) = xxx_todo_changeme9
+    (p, q) = xxx_todo_changeme10
     return a * p + c * q, b * p + d * q
 
 
@@ -101,7 +109,7 @@ def fsplit(pred, objs):
 def drange(v0, v1, d):
     """Returns a discrete range."""
     assert v0 < v1
-    return xrange(int(v0) / d, int(v1 + d) / d)
+    return range(int(v0) / d, int(v1 + d) / d)
 
 
 def dist(obj1, obj2):
@@ -192,7 +200,7 @@ def nunpack(s, default=0):
         raise TypeError('invalid length: %d' % l)
 
 
-PDFDocEncoding = ''.join(unichr(x) for x in (
+PDFDocEncoding = ''.join(chr(x) for x in (
     0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007,
     0x0008, 0x0009, 0x000a, 0x000b, 0x000c, 0x000d, 0x000e, 0x000f,
     0x0010, 0x0011, 0x0012, 0x0013, 0x0014, 0x0015, 0x0017, 0x0017,
@@ -231,7 +239,7 @@ PDFDocEncoding = ''.join(unichr(x) for x in (
 def decode_text(s):
     """Decodes a PDFDocEncoding string to Unicode."""
     if s.startswith('\xfe\xff'):
-        return unicode(s[2:], 'utf-16be', 'ignore')
+        return str(s[2:], 'utf-16be', 'ignore')
     else:
         return ''.join(PDFDocEncoding[ord(c)] for c in s)
 
@@ -242,11 +250,13 @@ def enc(x, codec='ascii'):
     return x.encode(codec, 'xmlcharrefreplace')
 
 
-def bbox2str((x0, y0, x1, y1)):
+def bbox2str(xxx_todo_changeme11):
+    (x0, y0, x1, y1) = xxx_todo_changeme11
     return '%.3f,%.3f,%.3f,%.3f' % (x0, y0, x1, y1)
 
 
-def matrix2str((a, b, c, d, e, f)):
+def matrix2str(xxx_todo_changeme12):
+    (a, b, c, d, e, f) = xxx_todo_changeme12
     return '[%.2f,%.2f,%.2f,%.2f, (%.2f,%.2f)]' % (a, b, c, d, e, f)
 
 
@@ -299,24 +309,26 @@ class Plane(object):
     def __contains__(self, obj):
         return obj in self._objs
 
-    def _getrange(self, (x0, y0, x1, y1)):
+    def _getrange(self, xxx_todo_changeme):
+        (x0, y0, x1, y1) = xxx_todo_changeme
         for y in drange(y0, y1, self.gridsize):
             for x in drange(x0, x1, self.gridsize):
                 yield (x, y)
 
-    def _gridrange(self, (x0, y0, x1, y1)):
+    def _gridrange(self, xxx_todo_changeme1):
         """Get points with data from grid in range."""
+        (x0, y0, x1, y1) = xxx_todo_changeme1
         gx0 = int(x0) / self.gridsize
         gx1 = int(x1 + self.gridsize) / self.gridsize
         gy0 = int(y0)/self.gridsize
         gy1 = int(y1 + self.gridsize) / self.gridsize
         if (gx1 - gx0) * (gy1 - gy0) <= len(self._grid):
-            for y in xrange(gy0, gy1):
-                for x in xrange(gx0, gx1):
+            for y in range(gy0, gy1):
+                for x in range(gx0, gx1):
                     if (x, y) in self._grid:
                         yield (x, y)
 
-        for point in ((x, y) for (x, y) in self._grid.keys() if gx0 <= x < gx1 and gy0 <= y < gy1):
+        for point in ((x, y) for (x, y) in list(self._grid.keys()) if gx0 <= x < gx1 and gy0 <= y < gy1):
             yield point
 
     def add(self, obj):
@@ -348,8 +360,9 @@ class Plane(object):
         self._objs.discard(obj)
         self._large.discard(obj)
 
-    def find(self, (x0, y0, x1, y1)):
+    def find(self, xxx_todo_changeme2):
         """Find objects that are in a certain area."""
+        (x0, y0, x1, y1) = xxx_todo_changeme2
         done = set()
         for k in self._gridrange((x0, y0, x1, y1)):
             for obj in self._grid[k]:

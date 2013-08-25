@@ -4,25 +4,25 @@ import logging
 import re
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
-from cmapdb import CMapDB, CMap
-from psparser import PSTypeError, PSEOF
-from psparser import PSKeyword, literal_name, keyword_name
-from psparser import PSStackParser
-from psparser import LIT, KWD, handle_error
-from pdftypes import PDFException, PDFStream, PDFObjRef
-from pdftypes import resolve1
-from pdftypes import list_value, dict_value, stream_value
-from pdffont import PDFFontError
-from pdffont import PDFType1Font, PDFTrueTypeFont, PDFType3Font
-from pdffont import PDFCIDFont
-from pdfparser import PDFDocument, PDFParser
-from pdfcolor import PDFColorSpace
-from pdfcolor import PREDEFINED_COLORSPACE
-from utils import choplist
-from utils import mult_matrix, MATRIX_IDENTITY
+    from io import StringIO
+from .cmapdb import CMapDB, CMap
+from .psparser import PSTypeError, PSEOF
+from .psparser import PSKeyword, literal_name, keyword_name
+from .psparser import PSStackParser
+from .psparser import LIT, KWD, handle_error
+from .pdftypes import PDFException, PDFStream, PDFObjRef
+from .pdftypes import resolve1
+from .pdftypes import list_value, dict_value, stream_value
+from .pdffont import PDFFontError
+from .pdffont import PDFType1Font, PDFTrueTypeFont, PDFType3Font
+from .pdffont import PDFCIDFont
+from .pdfparser import PDFDocument, PDFParser
+from .pdfcolor import PDFColorSpace
+from .pdfcolor import PREDEFINED_COLORSPACE
+from .utils import choplist
+from .utils import mult_matrix, MATRIX_IDENTITY
 
 
 log = logging.getLogger('pdfminer.pdfinterp')
@@ -267,7 +267,7 @@ class PDFContentParser(PSStackParser):
                 obj = PDFStream(d, data)
                 self.push((pos, obj))
                 self.push((pos, self.KEYWORD_EI))
-            except PSTypeError, e:
+            except PSTypeError as e:
                 handle_error(type(e), str(e))
         else:
             self.push((pos, token))
@@ -302,22 +302,22 @@ class PDFPageInterpreter(object):
                 return PDFColorSpace(name, len(list_value(spec[1])))
             else:
                 return PREDEFINED_COLORSPACE.get(name)
-        for (k, v) in dict_value(resources).iteritems():
+        for (k, v) in dict_value(resources).items():
             log.debug('Resource: %r: %r', k, v)
             if k == 'Font':
-                for (fontid, spec) in dict_value(v).iteritems():
+                for (fontid, spec) in dict_value(v).items():
                     objid = None
                     if isinstance(spec, PDFObjRef):
                         objid = spec.objid
                     spec = dict_value(spec)
                     self.fontmap[fontid] = self.rsrcmgr.get_font(objid, spec)
             elif k == 'ColorSpace':
-                for (csid, spec) in dict_value(v).iteritems():
+                for (csid, spec) in dict_value(v).items():
                     self.csmap[csid] = get_colorspace(resolve1(spec))
             elif k == 'ProcSet':
                 self.rsrcmgr.get_procset(list_value(v))
             elif k == 'XObject':
-                for (xobjid, xobjstrm) in dict_value(v).iteritems():
+                for (xobjid, xobjstrm) in dict_value(v).items():
                     self.xobjmap[xobjid] = xobjstrm
 
     def init_state(self, ctm):
@@ -334,7 +334,7 @@ class PDFPageInterpreter(object):
         # set some global states.
         self.scs = self.ncs = None
         if self.csmap:
-            self.scs = self.ncs = self.csmap.values()[0]
+            self.scs = self.ncs = list(self.csmap.values())[0]
 
     def push(self, obj):
         self.argstack.append(obj)
@@ -753,7 +753,7 @@ class PDFPageInterpreter(object):
                 method = 'do_%s' % name.replace('*', '_a').replace('"', '_w').replace("'", '_q')
                 if hasattr(self, method):
                     func = getattr(self, method)
-                    nargs = func.func_code.co_argcount - 1
+                    nargs = func.__code__.co_argcount - 1
                     if nargs:
                         args = self.pop(nargs)
                         log.debug('exec: %s %r', name, args)
